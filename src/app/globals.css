@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3ecdc;
+  --color-paper-deep: #e9e0cb;
+  --color-paper-light: #faf6ec;
+  --color-ink: #12110f;
+  --color-ink-soft: #57503f;
+  --color-ink-faint: #8f8672;
+  --color-line: #12110f;
+  --color-hair: #cfc4a8;
+  --font-sans: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-glyph: "Noto Sans Symbols", "Segoe UI Symbol", "Apple Symbols", sans-serif;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-8;
+  }
+  /* small mono caption used for labels, statuses and data */
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-soft;
+  }
+  .display {
+    font-variation-settings: "wdth" 85;
+    @apply font-extrabold leading-[0.95] tracking-tight;
+  }
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  .link {
+    @apply underline decoration-1 underline-offset-4 hover:decoration-2;
+  }
+  .field {
+    @apply w-full border border-ink bg-paper-light px-3 py-2 text-[0.9375rem] text-ink placeholder:text-ink-faint;
+  }
+  .label {
+    @apply mb-1.5 block font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-soft;
+  }
+  .card {
+    @apply border border-ink bg-paper-light;
+  }
+  .glyph {
+    font-family: var(--font-glyph);
+    font-variant-emoji: text;
+  }
+  .notice {
+    @apply border-l-2 border-ink bg-paper-deep px-4 py-3 text-sm;
+  }
+}
+
+/* Markdown publications */
+.prose-origen {
+  @apply max-w-[68ch] text-[1.0625rem] leading-[1.7];
+}
+.prose-origen h1,
+.prose-origen h2 {
+  font-variation-settings: "wdth" 85;
+  @apply mt-10 mb-3 border-t border-ink pt-4 text-2xl font-extrabold tracking-tight;
+}
+.prose-origen h3 {
+  @apply mt-7 mb-2 text-lg font-bold;
+}
+.prose-origen p,
+.prose-origen ul,
+.prose-origen ol {
+  @apply mb-4;
+}
+.prose-origen ul {
+  @apply list-disc pl-5;
+}
+.prose-origen ol {
+  @apply list-decimal pl-5 font-mono text-sm leading-relaxed;
+}
+.prose-origen li {
+  @apply mb-1;
+}
+.prose-origen a {
+  @apply underline underline-offset-4;
+}
+.prose-origen blockquote {
+  @apply my-6 border-l-2 border-ink bg-paper-deep px-4 py-3 text-[0.9375rem] text-ink-soft;
+}
+.prose-origen blockquote p {
+  @apply mb-0;
+}
+.prose-origen code {
+  @apply bg-paper-deep px-1 font-mono text-[0.875em];
+}
+.prose-origen hr {
+  @apply my-8 border-ink;
+}
+.prose-origen table {
+  @apply mb-4 w-full border-collapse text-sm;
+}
+.prose-origen th,
+.prose-origen td {
+  @apply border-b border-hair px-2 py-1.5 text-left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .slow-turn {
+    animation: turn 480s linear infinite;
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+  }
+}
+@keyframes turn {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html {
+    background: #fff;
+  }
+}
