@@ -56,7 +56,7 @@ export async function SynastryView({ a, b, locale, base }: { a: Person; b: Perso
           <p className="display text-3xl">{t(`tone_${syn.tone}`)}</p>
           <div className="mt-5">
             <div className="flex h-4 border border-ink bg-paper-light" role="img" aria-label={t("easeBar", { pct: easePct })}>
-              <span className="block h-full bg-ink" style={{ width: `${easePct}%` }} />
+              <span className="block h-full bg-accent" style={{ width: `${easePct}%` }} />
             </div>
             <div className="mt-1.5 flex justify-between font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ink-soft">
               <span>

@@ -9,13 +9,73 @@
   --color-ink-faint: #8f8672;
   --color-line: #12110f;
   --color-hair: #cfc4a8;
+  /* accents equal the ink in the light theme and take colour in the dark one */
+  --color-accent: #12110f;
+  --color-accent-2: #12110f;
+  --color-accent-3: #12110f;
   --font-sans: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
   --font-display: "IM Fell English", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --font-glyph: "Noto Sans Symbols", "Segoe UI Symbol", "Apple Symbols", sans-serif;
 }
 
+:root {
+  --band-bg: var(--color-ink);
+  --band-fg: var(--color-paper);
+  --band-star: var(--color-paper);
+  --moon-shadow: var(--color-ink);
+  --moon-lit: var(--color-paper-light);
+  color-scheme: light;
+}
+
+/* Dark theme: chosen explicitly, or by the system when no choice was made. */
+:root[data-theme="dark"] {
+  --color-paper: #0d1024;
+  --color-paper-deep: #151938;
+  --color-paper-light: #1a1f44;
+  --color-ink: #f1e9d6;
+  --color-ink-soft: #b5aec8;
+  --color-ink-faint: #7d7999;
+  --color-line: #f1e9d6;
+  --color-hair: #333a66;
+  /* gold against indigo, with coral and sea-green as secondary notes */
+  --color-accent: #f2c46b;
+  --color-accent-2: #f0876a;
+  --color-accent-3: #79d2c4;
+  --band-bg: #151938;
+  --band-fg: #f1e9d6;
+  --band-star: #f2c46b;
+  --moon-shadow: #262c5c;
+  --moon-lit: #f2c46b;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #0d1024;
+    --color-paper-deep: #151938;
+    --color-paper-light: #1a1f44;
+    --color-ink: #f1e9d6;
+    --color-ink-soft: #b5aec8;
+    --color-ink-faint: #7d7999;
+    --color-line: #f1e9d6;
+    --color-hair: #333a66;
+    /* gold against indigo, with coral and sea-green as secondary notes */
+    --color-accent: #f2c46b;
+    --color-accent-2: #f0876a;
+    --color-accent-3: #79d2c4;
+    --band-bg: #151938;
+    --band-fg: #f1e9d6;
+    --band-star: #f2c46b;
+    --moon-shadow: #262c5c;
+    --moon-lit: #f2c46b;
+    color-scheme: dark;
+  }
+}
+
 html {
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -29,12 +89,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-ink);
+  background: var(--color-accent);
   color: var(--color-paper);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-ink);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
@@ -52,16 +112,16 @@ body {
     @apply font-normal leading-[1] tracking-[-0.01em];
   }
   .btn {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-paper hover:text-ink disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-accent bg-accent px-5 py-2.5 text-sm font-semibold text-paper transition-colors duration-300 hover:bg-transparent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-ghost {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-sm {
     @apply px-3 py-1.5 text-xs;
   }
   .link {
-    @apply underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply underline decoration-accent decoration-1 underline-offset-4 transition-colors duration-300 hover:text-accent hover:decoration-2;
   }
   .field {
     @apply w-full border border-ink bg-paper-light px-3 py-2 text-[0.9375rem] text-ink placeholder:text-ink-faint;
@@ -77,7 +137,21 @@ body {
     font-variant-emoji: text;
   }
   .notice {
-    @apply border-l-2 border-ink bg-paper-deep px-4 py-3 text-sm;
+    @apply border-l-2 border-accent bg-paper-deep px-4 py-3 text-sm;
+  }
+  /* inverted section on the landing page */
+  .band {
+    background: var(--band-bg);
+    color: var(--band-fg);
+    --star-color: var(--band-star);
+  }
+  /* tree cells and report cards: colours cross-fade instead of snapping */
+  .fade-colors {
+    transition:
+      color 0.55s ease,
+      background-color 0.55s ease,
+      border-color 0.55s ease,
+      opacity 0.55s ease;
   }
 }
 
@@ -133,7 +207,7 @@ body {
 /* ---------- landing: stars and the living sky ---------- */
 .star {
   position: absolute;
-  color: var(--star-color, var(--color-ink));
+  color: var(--star-color, var(--color-accent));
   opacity: var(--o, 0.4);
   pointer-events: none;
 }
@@ -156,6 +230,9 @@ body {
   .shooting-star {
     animation: shoot 11s ease-in 3s infinite;
   }
+  .shooting-star-2 {
+    animation: shoot 17s ease-in 9s infinite;
+  }
   .rise-in {
     animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
     animation-delay: var(--delay, 0s);
@@ -171,7 +248,8 @@ body {
       planet-glow 6s ease-in-out infinite;
   }
 }
-.shooting-star {
+.shooting-star,
+.shooting-star-2 {
   opacity: 0;
 }
 @keyframes turn {

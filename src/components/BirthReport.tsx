@@ -48,7 +48,7 @@ function Bar({ label, value, max }: { label: string; value: number; max: number 
     <div className="grid grid-cols-[5.5rem_1fr_1.5rem] items-center gap-3">
       <span className="text-sm font-medium">{label}</span>
       <span className="h-3 border border-ink bg-paper-light">
-        <span className="block h-full bg-ink" style={{ width: `${max ? (value / max) * 100 : 0}%` }} />
+        <span className="block h-full bg-accent" style={{ width: `${max ? (value / max) * 100 : 0}%` }} />
       </span>
       <span className="text-right font-mono text-xs">{value}</span>
     </div>
@@ -173,7 +173,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
                 ] as const
               ).map(([key, p, role]) => (
                 <div key={key} className="card grid grid-cols-[4rem_1fr] items-center gap-4 p-4">
-                  <span className="glyph text-center text-5xl leading-none" aria-hidden>
+                  <span className="glyph text-center text-5xl leading-none text-accent" aria-hidden>
                     {BODY_GLYPH[key]}
                   </span>
                   <div>

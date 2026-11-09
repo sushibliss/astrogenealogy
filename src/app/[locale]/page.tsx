@@ -35,7 +35,7 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
         <div className="wrap relative grid items-center gap-x-10 gap-y-10 pt-12 pb-16 lg:min-h-[calc(100dvh-8rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
           <div>
             <p className="eyebrow rise-in flex items-center gap-2">
-              <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden>
+              <svg viewBox="0 0 24 24" width="11" height="11" className="text-accent" aria-hidden>
                 <path d={STAR} fill="currentColor" />
               </svg>
               {t("flourish")}
@@ -47,7 +47,7 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
               Origen
             </p>
             <h1
-              className="display rise-in mt-6 max-w-xl text-4xl leading-[1.08] italic sm:text-5xl"
+              className="display rise-in mt-6 max-w-xl text-4xl leading-[1.08] text-accent italic sm:text-5xl"
               style={{ "--delay": "0.25s" } as React.CSSProperties}
             >
               {t("headline")}
@@ -76,7 +76,7 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
           <figure className="mx-auto w-full max-w-[40rem]">
             {/* the living sky: two slow rings of stars around today's chart */}
             <div className="relative p-[6.5%]">
-              <svg viewBox="0 0 200 200" className="slow-turn absolute inset-0 h-full w-full" aria-hidden>
+              <svg viewBox="0 0 200 200" className="slow-turn absolute inset-0 h-full w-full text-accent" aria-hidden>
                 <circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" strokeWidth="0.3" strokeDasharray="0.4 3.2" />
                 {Array.from({ length: 12 }, (_, i) => {
                   const a = (i * 30 * Math.PI) / 180;
@@ -134,10 +134,8 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-y border-ink bg-ink text-paper">
-        <div style={{ "--star-color": "var(--color-paper)" } as React.CSSProperties}>
-          <Starfield count={40} seed={23} />
-        </div>
+      <section className="band relative overflow-hidden border-y border-ink">
+        <Starfield count={40} seed={23} />
         <div className="wrap relative grid gap-10 py-16 md:grid-cols-3">
           {([1, 2, 3] as const).map((n) => (
             <div key={n}>

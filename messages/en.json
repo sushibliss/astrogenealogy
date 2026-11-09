@@ -9,7 +9,8 @@
     "logout": "Sign out",
     "login": "Sign in",
     "register": "Start",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Switch between light and dark"
   },
   "footer": {
     "tagline": "Origen. Researched by a person, read under the sky they were born under.",

@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { currentUser, isAdmin } from "@/lib/session";
 import { logoutAction } from "@/app/actions";
 import { LocaleSwitch } from "./LocaleSwitch";
+import { ThemeToggle } from "./ThemeToggle";
 
 export async function Header({ locale }: { locale: string }) {
   const t = await getTranslations("nav");
@@ -39,6 +40,7 @@ export async function Header({ locale }: { locale: string }) {
               </Link>
             </>
           )}
+          <ThemeToggle label={t("theme")} />
           <LocaleSwitch />
         </nav>
       </div>

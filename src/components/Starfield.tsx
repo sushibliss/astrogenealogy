@@ -52,10 +52,16 @@ export function Starfield({ count = 46, seed = 7, shooting = false }: { count?: 
         </svg>
       ))}
       {shooting && (
-        <span
-          className="shooting-star absolute top-[12%] right-[6%] block h-px w-40 origin-right"
-          style={{ background: "linear-gradient(to left, var(--color-ink), transparent)" }}
-        />
+        <>
+          <span
+            className="shooting-star absolute top-[12%] right-[6%] block h-px w-40 origin-right"
+            style={{ background: "linear-gradient(to left, var(--color-accent), transparent)" }}
+          />
+          <span
+            className="shooting-star-2 absolute top-[38%] right-[42%] block h-px w-28 origin-right"
+            style={{ background: "linear-gradient(to left, var(--color-accent-3), transparent)" }}
+          />
+        </>
       )}
     </div>
   );

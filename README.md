@@ -66,6 +66,8 @@ The sample families are invented.
 ## What is in v1
 
 - **Landing** with the live sky as its main visual, EN/ES switch everywhere.
+- **Light and dark themes**: cream and black, or indigo with gold accents. The site
+  follows the system setting until the visitor uses the switch in the header.
 - **Accounts**: email + password (Auth.js credentials), plus demo sign-in.
 - **Intake wizard**: you → parents → grandparents → review. Save as draft or
   submit. Names are required for the requester and both parents; unknown

@@ -56,9 +56,9 @@ export function Tree({
         )}
       </>
     );
-    const cls = `block w-full border px-2.5 ${compact ? "py-1" : "py-1.5"} text-left transition-colors ${
-      current ? "border-ink bg-ink text-paper" : "border-ink bg-paper-light"
-    } ${href && !current ? "hover:bg-ink hover:text-paper" : ""}`;
+    const cls = `block w-full border px-2.5 ${compact ? "py-1" : "py-1.5"} text-left fade-colors ${
+      current ? "border-accent bg-accent text-paper" : "border-ink bg-paper-light"
+    } ${href && !current ? "hover:border-accent hover:bg-accent hover:text-paper" : ""}`;
     return href ? (
       <Link href={href} className={cls} aria-current={current ? "page" : undefined}>
         {body}

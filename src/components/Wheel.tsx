@@ -113,13 +113,13 @@ export function Wheel({
                 y2={y2}
                 strokeWidth={soft ? 0.75 : 1}
                 strokeDasharray={soft ? "5 5" : undefined}
-                className={animated ? "wheel-aspect" : undefined}
+                className={`${soft ? "stroke-accent-3" : "stroke-accent-2"} ${animated ? "wheel-aspect" : ""}`}
               />
             );
           })}
 
         {/* where the Moon may be when the hour is unknown */}
-        {moon?.dayRange && <path d={arc(moon.dayRange[0], moon.dayRange[1], R_IN - 16)} strokeWidth={4} />}
+        {moon?.dayRange && <path d={arc(moon.dayRange[0], moon.dayRange[1], R_IN - 16)} strokeWidth={4} className="stroke-accent" />}
 
         {chart.placements.map((p, i) => {
           const [x1, y1] = pt(p.lon, R_IN - 12);
@@ -157,7 +157,7 @@ export function Wheel({
               x={x}
               y={y}
               fontSize={30}
-              className={animated ? "glyph wheel-planet" : "glyph"}
+              className={animated ? "glyph fill-accent wheel-planet" : "glyph fill-accent"}
               style={animated ? { animationDelay: `${0.5 + i * 0.16}s, ${2.5 + i * 0.7}s` } : undefined}
             >
               {BODY_GLYPH[p.body]}

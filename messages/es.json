@@ -9,7 +9,8 @@
     "logout": "Salir",
     "login": "Entrar",
     "register": "Empezar",
-    "language": "Idioma"
+    "language": "Idioma",
+    "theme": "Cambiar entre claro y oscuro"
   },
   "footer": {
     "tagline": "Origen. Investigado por una persona, leído bajo el cielo con el que nacieron.",

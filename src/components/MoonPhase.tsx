@@ -12,8 +12,8 @@ export function MoonPhase({ elongation, size = 44, className }: { elongation: nu
   const lit = `M 24 ${24 - r} A ${r} ${r} 0 0 1 24 ${24 + r} A ${rx} ${r} 0 0 ${a < 90 ? 0 : 1} 24 ${24 - r} Z`;
   return (
     <svg viewBox="0 0 48 48" width={size} height={size} className={className} aria-hidden>
-      <circle cx="24" cy="24" r={r} fill="var(--color-ink)" />
-      <path d={lit} fill="var(--color-paper-light)" transform={waxing ? undefined : "matrix(-1 0 0 1 48 0)"} />
+      <circle cx="24" cy="24" r={r} fill="var(--moon-shadow)" />
+      <path d={lit} fill="var(--moon-lit)" transform={waxing ? undefined : "matrix(-1 0 0 1 48 0)"} />
       <circle cx="24" cy="24" r={r} fill="none" stroke="var(--color-ink)" strokeWidth="1.5" />
     </svg>
   );

@@ -20,7 +20,7 @@ export async function ReportIndex({ people, locale, base }: { people: Person[]; 
           <li key={p.id}>
             <Link
               href={`${base}/people/${p.id}`}
-              className="card group grid h-full grid-cols-[3.25rem_1fr] items-center gap-3 p-3.5 transition-colors hover:bg-ink hover:text-paper"
+              className="card group grid h-full grid-cols-[3.25rem_1fr] items-center gap-3 p-3.5 fade-colors hover:border-accent hover:bg-accent hover:text-paper"
             >
               <span
                 className={`glyph grid h-13 w-13 place-items-center border border-current text-3xl leading-none ${chart ? "" : "border-dashed opacity-50"}`}
@@ -29,7 +29,7 @@ export async function ReportIndex({ people, locale, base }: { people: Person[]; 
                 {sun ? SIGN_GLYPH[SIGNS[sun.sign]] : "·"}
               </span>
               <span className="min-w-0">
-                <span className="eyebrow block truncate !text-[0.625rem] group-hover:!text-paper">
+                <span className="eyebrow fade-colors block truncate !text-[0.625rem] group-hover:!text-paper">
                   {relationLabel(p.path, locale).replace(/ \(.*\)$/, "")}
                 </span>
                 <span className="block truncate font-bold leading-tight">{fullName(p) || t("unknown")}</span>
