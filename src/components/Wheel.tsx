@@ -41,10 +41,13 @@ export function Wheel({
   chart,
   title,
   className,
+  animated = false,
 }: {
   chart: Chart;
   title: string;
   className?: string;
+  /** draws the aspects in and lets the planets appear one by one (landing page) */
+  animated?: boolean;
 }) {
   const base = chart.hasAngles && chart.asc != null ? chart.asc : 0;
   const pt = (lon: number, r: number) => {
@@ -110,6 +113,7 @@ export function Wheel({
                 y2={y2}
                 strokeWidth={soft ? 0.75 : 1}
                 strokeDasharray={soft ? "5 5" : undefined}
+                className={animated ? "wheel-aspect" : undefined}
               />
             );
           })}
@@ -148,7 +152,14 @@ export function Wheel({
         {chart.placements.map((p, i) => {
           const [x, y] = pt(shown[i], R_PLANET);
           return (
-            <text key={p.body} x={x} y={y} fontSize={30} className="glyph">
+            <text
+              key={p.body}
+              x={x}
+              y={y}
+              fontSize={30}
+              className={animated ? "glyph wheel-planet" : "glyph"}
+              style={animated ? { animationDelay: `${0.5 + i * 0.16}s, ${2.5 + i * 0.7}s` } : undefined}
+            >
               {BODY_GLYPH[p.body]}
             </text>
           );

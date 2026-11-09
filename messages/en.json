@@ -33,7 +33,7 @@
     "cta": "Start a research request",
     "login": "Sign in",
     "private": "Private by default · English and Spanish",
-    "skyTitle": "The sky right now · {date}",
+    "skyTitle": "The sky right now",
     "step1Title": "You tell us who you know",
     "step1Body": "A short intake: names, dates and places for you, your parents and your grandparents. Leave blank what you do not know. That is what the research is for.",
     "step2Title": "A person does the research",
@@ -43,7 +43,18 @@
     "honestTitle": "No instant matches. No public trees.",
     "honest1": "Origen will never tell you in thirty seconds that you descend from a king. Research takes the time it takes, and you will be told plainly what is documented and what is still open.",
     "honest2": "Most of your ancestors’ birth hours were never written down. Their reports say so, and show what can honestly be known from the date alone: the planets by sign, without a guessed Ascendant.",
-    "honest3": "Your request and its findings are visible only to you, to Teresa, and to the people you invite to read."
+    "honest3": "Your request and its findings are visible only to you, to Teresa, and to the people you invite to read.",
+    "almanac": "Today",
+    "inSign": "{body} in {sign}",
+    "phase_0": "New Moon",
+    "phase_1": "Waxing crescent",
+    "phase_2": "First quarter",
+    "phase_3": "Waxing gibbous",
+    "phase_4": "Full Moon",
+    "phase_5": "Waning gibbous",
+    "phase_6": "Last quarter",
+    "phase_7": "Waning crescent",
+    "flourish": "Genealogy by hand · charts by the sky"
   },
   "auth": {
     "name": "Your name",

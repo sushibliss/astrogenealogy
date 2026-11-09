@@ -33,7 +33,7 @@
     "cta": "Iniciar una solicitud",
     "login": "Entrar",
     "private": "Privado por defecto · Español e inglés",
-    "skyTitle": "El cielo ahora mismo · {date}",
+    "skyTitle": "El cielo ahora mismo",
     "step1Title": "Nos cuentas a quién conoces",
     "step1Body": "Un formulario breve: nombres, fechas y lugares de ti, de tus padres y de tus abuelos. Deja en blanco lo que no sepas. Para eso está la investigación.",
     "step2Title": "Una persona investiga",
@@ -43,7 +43,18 @@
     "honestTitle": "Sin coincidencias instantáneas. Sin árboles públicos.",
     "honest1": "Origen nunca te dirá en treinta segundos que desciendes de un rey. La investigación lleva el tiempo que lleva, y se te dirá con claridad qué está documentado y qué sigue abierto.",
     "honest2": "La hora de nacimiento de la mayoría de tus antepasados nunca se anotó. Sus informes lo dicen, y muestran lo que puede saberse con honestidad solo con la fecha: los planetas por signo, sin un Ascendente inventado.",
-    "honest3": "Tu solicitud y sus hallazgos solo los ves tú, Teresa y las personas a las que invites a leer."
+    "honest3": "Tu solicitud y sus hallazgos solo los ves tú, Teresa y las personas a las que invites a leer.",
+    "almanac": "Hoy",
+    "inSign": "{body} en {sign}",
+    "phase_0": "Luna nueva",
+    "phase_1": "Luna creciente",
+    "phase_2": "Cuarto creciente",
+    "phase_3": "Gibosa creciente",
+    "phase_4": "Luna llena",
+    "phase_5": "Gibosa menguante",
+    "phase_6": "Cuarto menguante",
+    "phase_7": "Luna menguante",
+    "flourish": "Genealogía a mano · cartas según el cielo"
   },
   "auth": {
     "name": "Tu nombre",
