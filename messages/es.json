@@ -26,7 +26,11 @@
     "unknown": "Desconocido",
     "living": "Familiar vivo",
     "deeper": "Más atrás",
-    "research": "Encontrado durante la investigación"
+    "research": "Encontrado durante la investigación",
+    "legendIntake": "Contado por la familia",
+    "legendResearch": "Encontrado en la investigación",
+    "legendUnknown": "Aún por descubrir",
+    "title": "Árbol familiar, dibujado como una constelación"
   },
   "landing": {
     "headline": "Tus antepasados también nacieron bajo un cielo.",
@@ -164,7 +168,7 @@
     "explain_published": "Se están ultimando los hallazgos.",
     "findings": "Hallazgos",
     "tree": "Árbol familiar",
-    "treeLead": "Un pequeño esquema de las personas de esta solicitud. Las marcadas con ✦ se encontraron durante la investigación. Elige a cualquiera para abrir su informe natal.",
+    "treeLead": "Un pequeño esquema de las personas de esta solicitud, una generación por órbita, con la línea paterna a la izquierda. Elige a cualquiera para abrir su informe natal.",
     "reports": "Informes natales",
     "reportsLead": "Uno por cada persona con fecha de nacimiento completa. Sin hora de nacimiento, el informe muestra solo los planetas por signo.",
     "share": "Invita a familiares a leer",

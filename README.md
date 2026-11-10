@@ -76,7 +76,8 @@ The sample families are invented.
 - **Research desk** (admin): request queue, status changes, add/edit/remove
   ancestors found during research, write findings in Markdown with preview,
   save drafts, publish.
-- **Requester view**: findings, a light tree sketch, a gallery of birth reports.
+- **Requester view**: findings, the family tree drawn as a constellation that
+  unveils one generation at a time, and a gallery of birth reports.
 - **Invite-to-read links**: read-only, revocable. Guests only see published
   findings; living relatives appear by relationship only and their reports are
   not reachable.

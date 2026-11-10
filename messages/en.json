@@ -26,7 +26,11 @@
     "unknown": "Unknown",
     "living": "Living relative",
     "deeper": "Further back",
-    "research": "Found during research"
+    "research": "Found during research",
+    "legendIntake": "Told by the family",
+    "legendResearch": "Found during research",
+    "legendUnknown": "Not yet known",
+    "title": "Family tree, drawn as a constellation"
   },
   "landing": {
     "headline": "Your ancestors were born under a sky, too.",
@@ -164,7 +168,7 @@
     "explain_published": "The findings are being finalised.",
     "findings": "Findings",
     "tree": "Family tree",
-    "treeLead": "A small sketch of the people in this request. Those marked ✦ were found during research. Select anyone to open their birth report.",
+    "treeLead": "A small sketch of the people in this request, one generation per orbit, paternal line on the left. Select anyone to open their birth report.",
     "reports": "Birth reports",
     "reportsLead": "One for each person with a full birth date. Without a birth hour a report shows the planets by sign only.",
     "share": "Invite relatives to read",

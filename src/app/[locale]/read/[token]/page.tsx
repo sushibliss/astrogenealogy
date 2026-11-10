@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Markdown } from "@/components/Markdown";
 import { ReportIndex } from "@/components/ReportIndex";
-import { Tree } from "@/components/Tree";
+import { FamilyConstellation } from "@/components/FamilyConstellation";
+import { Starfield } from "@/components/Starfield";
 import { requestForToken } from "@/lib/access";
 import { isPrivateForGuests } from "@/lib/people";
 
@@ -34,16 +35,27 @@ export default async function ReadPage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      <section className="border-t border-ink">
-        <div className="wrap py-12">
-          <h2 className="display text-3xl">{t("tree")}</h2>
-          <p className="mt-2 mb-6 max-w-2xl text-sm text-ink-soft">{t("treeLead")}</p>
-          <Tree
+      <section className="relative overflow-hidden border-t border-ink">
+        <Starfield count={54} seed={41} shooting />
+        <div className="wrap relative py-14">
+          <div className="mb-2 text-center">
+            <h2 className="display text-4xl sm:text-5xl">{t("tree")}</h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-ink-soft">{t("treeLead")}</p>
+          </div>
+          <FamilyConstellation
             people={people}
             locale={locale}
             hiddenIds={hiddenIds}
             hrefFor={(p) => `${base}/people/${p.id}`}
-            labels={{ unknown: tTree("unknown"), living: tTree("living"), deeper: tTree("deeper"), research: tTree("research") }}
+            labels={{
+              unknown: tTree("unknown"),
+              living: tTree("living"),
+              deeper: tTree("deeper"),
+              legendIntake: tTree("legendIntake"),
+              legendResearch: tTree("legendResearch"),
+              legendUnknown: tTree("legendUnknown"),
+              title: tTree("title"),
+            }}
           />
         </div>
       </section>
