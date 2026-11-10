@@ -333,32 +333,55 @@ body {
   }
 }
 
-/* ---------- family constellation: unveils one generation at a time ---------- */
+/* ---------- family constellation: unveils in stages, then responds to the pointer ---------- */
 .constellation .c-link {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) var(--d, 0s);
+  transition:
+    stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) var(--d, 0s),
+    stroke 0.6s ease,
+    stroke-width 0.6s ease;
 }
 .constellation .c-node {
   opacity: 0;
   transform: scale(0.1);
   transition:
     opacity 0.9s ease var(--d, 0s),
-    transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.5) var(--d, 0s);
+    transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.5) var(--d, 0s),
+    r 0.5s ease;
 }
 .constellation .c-label,
 .constellation .c-faint,
-.constellation .c-orbit {
+.constellation .c-fade,
+.constellation .c-orbit,
+.constellation .c-kin {
   opacity: 0;
   transition: opacity 1.2s ease var(--d, 0s);
 }
-.constellation .c-halo {
+.constellation .c-sign {
+  opacity: 0;
+  transform: scale(0.3) rotate(-30deg);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 0.8s ease var(--d, 0s),
+    transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.4) var(--d, 0s),
+    fill 0.5s ease;
+}
+.constellation .c-halo,
+.constellation .c-ripple,
+.constellation .c-sweep,
+.constellation .c-ray,
+.constellation .c-select {
   opacity: 0;
 }
 .constellation .c-ripple {
-  opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
+}
+.constellation .c-ray,
+.constellation .c-select {
+  transition: opacity 0.6s ease;
 }
 .constellation[data-unveiled="true"] .c-link {
   stroke-dashoffset: 0;
@@ -367,14 +390,22 @@ body {
   opacity: 1;
   transform: scale(1);
 }
-.constellation[data-unveiled="true"] .c-label {
+.constellation[data-unveiled="true"] .c-label,
+.constellation[data-unveiled="true"] .c-fade {
   opacity: 1;
+}
+.constellation[data-unveiled="true"] .c-sign {
+  opacity: 0.8;
+  transform: none;
 }
 .constellation[data-unveiled="true"] .c-faint {
   opacity: 0.45;
 }
 .constellation[data-unveiled="true"] .c-orbit {
   opacity: 0.5;
+}
+.constellation[data-unveiled="true"] .c-kin {
+  opacity: 0.4;
 }
 .constellation[data-unveiled="true"] .c-halo {
   animation: halo 5s ease-in-out var(--d, 0s) infinite;
@@ -385,24 +416,57 @@ body {
 .constellation[data-unveiled="true"] .c-ripple-2 {
   animation-delay: 1.3s;
 }
-.c-person .c-node > :not(.c-halo),
-.c-person text {
+.constellation[data-unveiled="true"] .c-sweep {
+  animation: sweep 3.4s cubic-bezier(0.45, 0, 0.55, 1) 0.2s 1 both;
+}
+/* responses to hover, focus and selection (only once everything has appeared) */
+.constellation[data-unveiled="true"] .c-sign.is-lit {
+  opacity: 1;
+  transform: scale(1.45);
+  transition-delay: 0s;
+}
+.constellation[data-unveiled="true"] .c-kin.is-lit {
+  opacity: 0.95;
+  transition-delay: 0s;
+}
+.constellation[data-unveiled="true"] .c-ray.is-lit {
+  opacity: 0.7;
+}
+.constellation[data-unveiled="true"] .c-select.is-lit {
+  opacity: 1;
+}
+.c-person {
+  cursor: pointer;
+}
+.c-person .c-mark,
+.c-person .c-label text {
   transition:
-    fill 0.45s ease,
-    transform 0.45s ease;
+    fill 0.5s ease,
+    transform 0.5s cubic-bezier(0.3, 0.8, 0.3, 1.2);
   transform-box: fill-box;
   transform-origin: center;
 }
-.c-person:hover .c-node > :not(.c-halo),
-.c-person:focus-visible .c-node > :not(.c-halo) {
-  transform: scale(1.45);
+.c-person:hover .c-mark,
+.c-person:focus-visible .c-mark,
+.c-person.is-selected .c-mark {
+  transform: scale(1.22);
 }
-.c-person:hover text,
-.c-person:focus-visible text {
+.c-person:hover .c-label text,
+.c-person:focus-visible .c-label text,
+.c-person.is-selected .c-label text {
   fill: var(--color-accent);
+}
+.c-person:hover .c-halo,
+.c-person.is-selected .c-halo {
+  animation-duration: 2.2s !important;
 }
 .c-person:focus-visible {
   outline: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .person-card {
+    animation: card-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
 }
 @keyframes halo {
   0%,
@@ -423,16 +487,40 @@ body {
     transform: scale(3.4);
   }
 }
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    transform: rotate(-68deg);
+  }
+  12%,
+  85% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(68deg);
+  }
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .constellation .c-link,
   .constellation .c-node,
   .constellation .c-label,
   .constellation .c-faint,
-  .constellation .c-orbit {
+  .constellation .c-fade,
+  .constellation .c-orbit,
+  .constellation .c-kin,
+  .constellation .c-sign {
     transition: none;
   }
   .constellation[data-unveiled="true"] .c-halo,
-  .constellation[data-unveiled="true"] .c-ripple {
+  .constellation[data-unveiled="true"] .c-ripple,
+  .constellation[data-unveiled="true"] .c-sweep {
     animation: none;
   }
 }

@@ -20,7 +20,7 @@ export default async function GuestPersonPage({
     <BirthReport
       person={person}
       locale={locale}
-      ctx={{ base: `/read/${token}`, canEdit: false, people: access.people, hiddenIds }}
+      ctx={{ base: `/read/${token}`, canEdit: false, people: access.people, hiddenIds, token }}
     />
   );
 }

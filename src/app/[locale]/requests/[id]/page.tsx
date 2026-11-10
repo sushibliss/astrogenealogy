@@ -21,7 +21,6 @@ export default async function RequestPage({ params }: { params: Promise<{ locale
   if (request.status === "draft" && access.isOwner) redirect({ href: `/requests/${id}/edit`, locale });
 
   const t = await getTranslations("request");
-  const tTree = await getTranslations("tree");
   const self = people.find((p) => p.path === "");
   const published = request.status === "published" && !!publication?.publishedAt;
   const fmt = new Intl.DateTimeFormat(locale, { dateStyle: "long" });
@@ -66,25 +65,12 @@ export default async function RequestPage({ params }: { params: Promise<{ locale
 
       <section className="relative overflow-hidden border-t border-ink">
         <Starfield count={54} seed={41} shooting />
-        <div className="wrap relative py-14">
+        <div className="relative mx-auto w-full max-w-[100rem] px-4 py-14 sm:px-8">
           <div className="mb-2 text-center">
             <h2 className="display text-4xl sm:text-5xl">{t("tree")}</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-ink-soft">{t("treeLead")}</p>
           </div>
-          <FamilyConstellation
-            people={people}
-            locale={locale}
-            hrefFor={(p) => `${base}/people/${p.id}`}
-            labels={{
-              unknown: tTree("unknown"),
-              living: tTree("living"),
-              deeper: tTree("deeper"),
-              legendIntake: tTree("legendIntake"),
-              legendResearch: tTree("legendResearch"),
-              legendUnknown: tTree("legendUnknown"),
-              title: tTree("title"),
-            }}
-          />
+          <FamilyConstellation people={people} locale={locale} base={base} />
         </div>
       </section>
 

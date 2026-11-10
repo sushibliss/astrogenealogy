@@ -5,6 +5,7 @@ import { and, eq } from "drizzle-orm";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { randomBytes, randomUUID } from "node:crypto";
+import { rmSync } from "node:fs";
 import { signIn, signOut } from "@/auth";
 import { db, schema } from "@/db";
 import { REQUEST_STATUSES, type RequestStatus } from "@/db/schema";
@@ -12,6 +13,7 @@ import { redirect } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { requestForUser } from "@/lib/access";
 import { demoEnabled } from "@/lib/demo";
+import { uploadPath } from "@/lib/documents";
 import { INTAKE_PATHS, PATH_RE } from "@/lib/people";
 import { cleanPersonInput } from "@/lib/person-input";
 import { DEMO_PASSWORD, DEMO_USER_EMAIL, ensureDemoData } from "@/lib/seed";
@@ -194,6 +196,16 @@ export async function deletePersonAction(form: FormData) {
     throw new Error("Remove this person's ancestors first");
   }
   db.delete(schema.people).where(eq(schema.people.id, personId)).run();
+  revalidatePath("/", "layout");
+}
+
+export async function deleteDocumentAction(form: FormData) {
+  const user = await authed();
+  if (!isAdmin(user)) throw new Error("Forbidden");
+  const doc = db.select().from(schema.documents).where(eq(schema.documents.id, String(form.get("documentId")))).get();
+  if (!doc) return;
+  db.delete(schema.documents).where(eq(schema.documents.id, doc.id)).run();
+  if (doc.kind === "file") rmSync(uploadPath(doc.id), { force: true });
   revalidatePath("/", "layout");
 }
 

@@ -29,6 +29,7 @@ import {
   YEARS_PER_SIGN,
   aspectText,
 } from "@/lib/astro/readings";
+import { documentHref, documentsByPerson } from "@/lib/documents";
 import { birthDataOf, formatPartialDate, fullName, relationLabel } from "@/lib/people";
 import { Tree } from "./Tree";
 import { Wheel } from "./Wheel";
@@ -41,6 +42,8 @@ export type ReportContext = {
   people: Person[];
   /** people whose details the viewer may not see */
   hiddenIds: Set<string>;
+  /** invite token, when a guest is reading */
+  token?: string;
 };
 
 function Bar({ label, value, max }: { label: string; value: number; max: number }) {
@@ -58,6 +61,8 @@ function Bar({ label, value, max }: { label: string; value: number; max: number 
 export async function BirthReport({ person, locale, ctx }: { person: Person; locale: string; ctx: ReportContext }) {
   const t = await getTranslations("report");
   const tTree = await getTranslations("tree");
+  const tDocs = await getTranslations("docs");
+  const sources = documentsByPerson(person.requestId).get(person.id) ?? [];
   const lang = locale === "es" ? "es" : "en";
   const name = fullName(person) || t("unknownName");
   const birth = birthDataOf(person);
@@ -398,6 +403,35 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
             </section>
           )}
         </>
+      )}
+
+      {sources.length > 0 && (
+        <section className="border-t border-ink">
+          <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
+            <div>
+              <h2 className="display text-3xl">{tDocs("sectionTitle")}</h2>
+              <p className="mt-2 text-sm text-ink-soft">{tDocs("sectionLead")}</p>
+            </div>
+            <ul className="grid max-w-2xl gap-2 self-start">
+              {sources.map((doc) => (
+                <li key={doc.id}>
+                  <a
+                    href={documentHref(doc, ctx.token)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fade-colors flex items-center gap-3 border border-ink bg-paper-light px-4 py-3 hover:border-accent hover:text-accent"
+                  >
+                    <span className="shrink-0 border border-current px-1 font-mono text-[0.625rem] uppercase tracking-[0.1em]">
+                      {doc.kind === "file" ? tTree("pdf") : tTree("link")}
+                    </span>
+                    <span className="min-w-0 flex-1">{doc.title}</span>
+                    <span aria-hidden>↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       )}
 
       {/* lineage navigator */}

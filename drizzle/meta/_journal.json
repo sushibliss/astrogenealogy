@@ -8,6 +8,13 @@
       "when": 1794260535380,
       "tag": "0000_redundant_clint_barton",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1794352034471,
+      "tag": "0001_mushy_juggernaut",
+      "breakpoints": true
     }
   ]
 }

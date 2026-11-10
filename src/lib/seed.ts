@@ -1,8 +1,10 @@
 import bcrypt from "bcryptjs";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { writeFileSync } from "node:fs";
 import { randomUUID } from "node:crypto";
 import { db, schema } from "@/db";
 import type { Living } from "@/db/schema";
+import { samplePdf, uploadPath } from "./documents";
 import { adminEmail } from "./session";
 
 export const DEMO_PASSWORD = "origen-demo";
@@ -122,6 +124,44 @@ function ensureUser(email: string, name: string, locale: string, hash: string) {
   return { user, created: true };
 }
 
+/** Sample source documents for the demo family (added once). */
+function ensureDemoDocuments(ownerId: string) {
+  const request = db.select().from(schema.requests).where(eq(schema.requests.ownerId, ownerId)).all()[0];
+  if (!request) return;
+  if (db.select().from(schema.documents).where(eq(schema.documents.requestId, request.id)).all().length > 0) return;
+  const person = (path: string) =>
+    db
+      .select()
+      .from(schema.people)
+      .where(and(eq(schema.people.requestId, request.id), eq(schema.people.path, path)))
+      .get();
+  const now = new Date();
+  const narcis = person("fff");
+  if (narcis) {
+    const id = randomUUID();
+    const pdf = samplePdf([
+      "Sample document (demo data)",
+      "Parish of Sant Feliu, Girona. Baptisms 1895-1900, folio 112.",
+      "",
+      "On the fourth day of May of 1898 was baptised Narcis, born on the second",
+      "day of the same month, legitimate son of Joan Ferrer and Maria Bosch,",
+      "both natives of Girona.",
+      "",
+      "This is an invented transcription used to demonstrate Origen.",
+    ]);
+    writeFileSync(uploadPath(id), pdf);
+    db.insert(schema.documents)
+      .values({ id, requestId: request.id, personId: narcis.id, title: "Baptism entry, Sant Feliu (transcription)", kind: "file", fileName: "baptism-narcis-ferrer.pdf", size: pdf.length, createdAt: now })
+      .run();
+  }
+  const vicente = person("mff");
+  if (vicente) {
+    db.insert(schema.documents)
+      .values({ id: randomUUID(), requestId: request.id, personId: vicente.id, title: "1920 census of Valencia, catalogue record (sample link)", kind: "link", url: "https://pares.cultura.gob.es/", createdAt: now })
+      .run();
+  }
+}
+
 /** Idempotent: creates the admin, the demo users and their sample requests if missing. */
 export function ensureDemoData() {
   const hash = bcrypt.hashSync(DEMO_PASSWORD, 10);
@@ -166,6 +206,8 @@ export function ensureDemoData() {
       })
       .run();
   }
+
+  ensureDemoDocuments(demo.user.id);
 
   if (mateo.created) {
     const requestId = randomUUID();

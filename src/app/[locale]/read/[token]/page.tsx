@@ -14,7 +14,6 @@ export default async function ReadPage({ params }: { params: Promise<{ locale: s
   if (!access) notFound();
   const { people, publication } = access;
   const t = await getTranslations("read");
-  const tTree = await getTranslations("tree");
   const hiddenIds = new Set(people.filter(isPrivateForGuests).map((p) => p.id));
   const visible = people.filter((p) => !hiddenIds.has(p.id));
   const base = `/read/${token}`;
@@ -37,26 +36,12 @@ export default async function ReadPage({ params }: { params: Promise<{ locale: s
 
       <section className="relative overflow-hidden border-t border-ink">
         <Starfield count={54} seed={41} shooting />
-        <div className="wrap relative py-14">
+        <div className="relative mx-auto w-full max-w-[100rem] px-4 py-14 sm:px-8">
           <div className="mb-2 text-center">
             <h2 className="display text-4xl sm:text-5xl">{t("tree")}</h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-ink-soft">{t("treeLead")}</p>
           </div>
-          <FamilyConstellation
-            people={people}
-            locale={locale}
-            hiddenIds={hiddenIds}
-            hrefFor={(p) => `${base}/people/${p.id}`}
-            labels={{
-              unknown: tTree("unknown"),
-              living: tTree("living"),
-              deeper: tTree("deeper"),
-              legendIntake: tTree("legendIntake"),
-              legendResearch: tTree("legendResearch"),
-              legendUnknown: tTree("legendUnknown"),
-              title: tTree("title"),
-            }}
-          />
+          <FamilyConstellation people={people} locale={locale} base={base} hiddenIds={hiddenIds} token={token} />
         </div>
       </section>
 

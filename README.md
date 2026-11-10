@@ -78,8 +78,16 @@ The sample families are invented.
 - **Research desk** (admin): request queue, status changes, add/edit/remove
   ancestors found during research, write findings in Markdown with preview,
   save drafts, publish.
-- **Requester view**: findings, the family tree drawn as a constellation that
-  unveils one generation at a time, and a gallery of birth reports.
+- **Requester view**: findings, the family tree, and a gallery of birth reports.
+- **Family tree**: a star chart that unveils in stages. Each person carries their
+  Sun sign, the outer band is the zodiac with every Sun marked on it, and people
+  who share a sign are joined by a thread. Hovering lights a person's line back
+  to the requester; selecting them opens a card beside the tree.
+- **Original documents**: the researcher can attach PDFs (up to 10 MB) or links
+  to a person from that person's edit page. They appear on the person's card
+  and birth report. Uploaded files live in `data/uploads/` and are only served
+  to the request's owner, the researcher, and invited readers (never for living
+  relatives).
 - **Invite-to-read links**: read-only, revocable. Guests only see published
   findings; living relatives appear by relationship only and their reports are
   not reachable.
@@ -120,7 +128,7 @@ src/lib/             access rules, people helpers, place search, seed data
 ```
 
 Data model (kept small on purpose): `users`, `requests`, `people`,
-`publications`, `invites`. A person's place in the tree is a single `path`
+`publications`, `invites`, `documents`. A person's place in the tree is a single `path`
 string from the requester (`""` self, `"f"` father, `"fm"` father's mother, …).
 
 ## Moving to Postgres

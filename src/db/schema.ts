@@ -99,7 +99,34 @@ export const invites = sqliteTable(
   (t) => [index("invites_request_idx").on(t.requestId)],
 );
 
+/**
+ * Original material behind a person's record: an uploaded PDF (stored on disk
+ * under data/uploads) or a link to where the record lives.
+ */
+export const documents = sqliteTable(
+  "documents",
+  {
+    id: text("id").primaryKey(),
+    requestId: text("request_id")
+      .notNull()
+      .references(() => requests.id, { onDelete: "cascade" }),
+    personId: text("person_id")
+      .notNull()
+      .references(() => people.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    kind: text("kind").$type<"file" | "link">().notNull(),
+    /** external address, for kind = "link" */
+    url: text("url"),
+    /** original file name, for kind = "file" */
+    fileName: text("file_name"),
+    size: integer("size"),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [index("documents_person_idx").on(t.personId), index("documents_request_idx").on(t.requestId)],
+);
+
 export type User = typeof users.$inferSelect;
+export type SourceDocument = typeof documents.$inferSelect;
 export type ResearchRequest = typeof requests.$inferSelect;
 export type Person = typeof people.$inferSelect;
 export type Publication = typeof publications.$inferSelect;
