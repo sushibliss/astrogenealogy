@@ -6,6 +6,8 @@ import { db, schema } from "@/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
+  // A fixed secret keeps local development zero-config; production must set AUTH_SECRET.
+  secret: process.env.AUTH_SECRET ?? (process.env.NODE_ENV !== "production" ? "origen-local-development-secret" : undefined),
   session: { strategy: "jwt" },
   providers: [
     Credentials({

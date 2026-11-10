@@ -11,6 +11,7 @@ import { REQUEST_STATUSES, type RequestStatus } from "@/db/schema";
 import { redirect } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { requestForUser } from "@/lib/access";
+import { demoEnabled } from "@/lib/demo";
 import { INTAKE_PATHS, PATH_RE } from "@/lib/people";
 import { cleanPersonInput } from "@/lib/person-input";
 import { DEMO_PASSWORD, DEMO_USER_EMAIL, ensureDemoData } from "@/lib/seed";
@@ -56,7 +57,7 @@ export async function registerAction(_prev: FormState, form: FormData): Promise<
 }
 
 export async function demoLoginAction(form: FormData) {
-  if (process.env.DEMO_LOGIN !== "true") throw new Error("Demo login is disabled");
+  if (!demoEnabled()) throw new Error("Demo login is disabled");
   ensureDemoData();
   const email = form.get("role") === "admin" ? adminEmail() : DEMO_USER_EMAIL;
   const locale = safeLocale(form.get("locale"));

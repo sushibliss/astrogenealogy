@@ -1,5 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { DemoLogin } from "@/components/DemoLogin";
+import { demoEnabled } from "@/lib/demo";
 import { MoonPhase, phaseIndex } from "@/components/MoonPhase";
 import { Starfield } from "@/components/Starfield";
 import { Wheel } from "@/components/Wheel";
@@ -71,6 +73,12 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
             <p className="eyebrow rise-in mt-6" style={{ "--delay": "0.7s" } as React.CSSProperties}>
               {t("private")}
             </p>
+            {!user && demoEnabled() && (
+              <div className="rise-in mt-8 border-t border-hair pt-5" style={{ "--delay": "0.85s" } as React.CSSProperties}>
+                <p className="eyebrow mb-2.5">{t("demoPrompt")}</p>
+                <DemoLogin locale={locale} compact />
+              </div>
+            )}
           </div>
 
           <figure className="mx-auto w-full max-w-[40rem]">

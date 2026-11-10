@@ -59,7 +59,8 @@
     "phase_5": "Waning gibbous",
     "phase_6": "Last quarter",
     "phase_7": "Waning crescent",
-    "flourish": "Genealogy by hand · charts by the sky"
+    "flourish": "Genealogy by hand · charts by the sky",
+    "demoPrompt": "Just looking? Try it with sample data"
   },
   "auth": {
     "name": "Your name",

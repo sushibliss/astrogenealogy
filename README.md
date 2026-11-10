@@ -26,9 +26,10 @@ automatically on first run (`data/origen.db`).
 
 ### Demo logins
 
-With `DEMO_LOGIN=true` (the default in `.env.example`) the sign-in page shows two
-one-click buttons: **Enter as a requester** and **Enter as Teresa** (admin).
-They work even without running the seed. The seeded accounts can also be used
+The home page and the sign-in page show two one-click buttons: **Enter as a
+requester** and **Enter as Teresa** (admin). They are always available under
+`npm run dev`, even without an `.env.local` file or running the seed. In
+production they only appear when `DEMO_LOGIN=true`. The seeded accounts can also be used
 with a password:
 
 | Role | Email | Password |
@@ -50,7 +51,7 @@ The sample families are invented.
 | `AUTH_SECRET` | Secret Auth.js uses to sign sessions. Generate with `npx auth secret`. |
 | `ADMIN_EMAIL` | The account with this email is the admin. Default `teresa@origen.local`. |
 | `DATABASE_URL` | Path of the SQLite file. Default `./data/origen.db`. |
-| `DEMO_LOGIN` | `true` shows the one-click demo sign-in buttons. |
+| `DEMO_LOGIN` | Demo sign-in buttons. On in development unless `false`; off in production unless `true`. |
 
 ## Scripts
 
@@ -66,7 +67,8 @@ The sample families are invented.
 ## What is in v1
 
 - **Landing** with the live sky as its main visual, EN/ES switch everywhere.
-- **Light and dark themes**: cream and black, or indigo with gold accents. The site
+- **Light and dark themes**: cream and black, or warm black with vermilion,
+  ochre and verdigris accents. The site
   follows the system setting until the visitor uses the switch in the header.
 - **Accounts**: email + password (Auth.js credentials), plus demo sign-in.
 - **Intake wizard**: you → parents → grandparents → review. Save as draft or

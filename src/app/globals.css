@@ -23,6 +23,7 @@
   --band-bg: var(--color-ink);
   --band-fg: var(--color-paper);
   --band-star: var(--color-paper);
+  --color-star: var(--color-ink);
   --moon-shadow: var(--color-ink);
   --moon-lit: var(--color-paper-light);
   color-scheme: light;
@@ -30,44 +31,46 @@
 
 /* Dark theme: chosen explicitly, or by the system when no choice was made. */
 :root[data-theme="dark"] {
-  --color-paper: #0d1024;
-  --color-paper-deep: #151938;
-  --color-paper-light: #1a1f44;
-  --color-ink: #f1e9d6;
-  --color-ink-soft: #b5aec8;
-  --color-ink-faint: #7d7999;
-  --color-line: #f1e9d6;
-  --color-hair: #333a66;
-  /* gold against indigo, with coral and sea-green as secondary notes */
-  --color-accent: #f2c46b;
-  --color-accent-2: #f0876a;
-  --color-accent-3: #79d2c4;
-  --band-bg: #151938;
-  --band-fg: #f1e9d6;
-  --band-star: #f2c46b;
-  --moon-shadow: #262c5c;
-  --moon-lit: #f2c46b;
+  --color-paper: #15120f;
+  --color-paper-deep: #1d1915;
+  --color-paper-light: #262019;
+  --color-ink: #ebe2cf;
+  --color-ink-soft: #a89f8c;
+  --color-ink-faint: #766d5e;
+  --color-line: #ebe2cf;
+  --color-hair: #3d352a;
+  /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
+  --color-accent: #e2623e;
+  --color-accent-2: #d9a441;
+  --color-accent-3: #7fb5a2;
+  --band-bg: #1d1915;
+  --band-fg: #ebe2cf;
+  --band-star: #d8c79a;
+  --color-star: #d8c79a;
+  --moon-shadow: #2e2720;
+  --moon-lit: #ebe2cf;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #0d1024;
-    --color-paper-deep: #151938;
-    --color-paper-light: #1a1f44;
-    --color-ink: #f1e9d6;
-    --color-ink-soft: #b5aec8;
-    --color-ink-faint: #7d7999;
-    --color-line: #f1e9d6;
-    --color-hair: #333a66;
-    /* gold against indigo, with coral and sea-green as secondary notes */
-    --color-accent: #f2c46b;
-    --color-accent-2: #f0876a;
-    --color-accent-3: #79d2c4;
-    --band-bg: #151938;
-    --band-fg: #f1e9d6;
-    --band-star: #f2c46b;
-    --moon-shadow: #262c5c;
-    --moon-lit: #f2c46b;
+    --color-paper: #15120f;
+    --color-paper-deep: #1d1915;
+    --color-paper-light: #262019;
+    --color-ink: #ebe2cf;
+    --color-ink-soft: #a89f8c;
+    --color-ink-faint: #766d5e;
+    --color-line: #ebe2cf;
+    --color-hair: #3d352a;
+    /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
+    --color-accent: #e2623e;
+    --color-accent-2: #d9a441;
+    --color-accent-3: #7fb5a2;
+    --band-bg: #1d1915;
+    --band-fg: #ebe2cf;
+    --band-star: #d8c79a;
+  --color-star: #d8c79a;
+    --moon-shadow: #2e2720;
+    --moon-lit: #ebe2cf;
     color-scheme: dark;
   }
 }
@@ -207,7 +210,7 @@ body {
 /* ---------- landing: stars and the living sky ---------- */
 .star {
   position: absolute;
-  color: var(--star-color, var(--color-accent));
+  color: var(--star-color, var(--color-star));
   opacity: var(--o, 0.4);
   pointer-events: none;
 }

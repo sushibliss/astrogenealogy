@@ -59,7 +59,8 @@
     "phase_5": "Gibosa menguante",
     "phase_6": "Cuarto menguante",
     "phase_7": "Luna menguante",
-    "flourish": "Genealogía a mano · cartas según el cielo"
+    "flourish": "Genealogía a mano · cartas según el cielo",
+    "demoPrompt": "¿Solo quieres mirar? Pruébalo con datos de ejemplo"
   },
   "auth": {
     "name": "Tu nombre",
