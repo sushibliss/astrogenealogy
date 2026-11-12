@@ -64,6 +64,8 @@ export const people = sqliteTable(
     birthTz: text("birth_tz"),
     deathDate: text("death_date"),
     deathPlace: text("death_place").notNull().default(""),
+    /** places they lived, one per line, optionally with years: "Girona (1930–1955)" */
+    residences: text("residences").notNull().default(""),
     living: text("living").$type<Living>().notNull().default("unknown"),
     notes: text("notes").notNull().default(""),
     createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),

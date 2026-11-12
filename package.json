@@ -19,6 +19,7 @@
     "astronomy-engine": "^2.1.19",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^13.0.3",
+    "d3-geo": "^3.1.2",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.6",
     "next-auth": "^5.0.0-beta.32",
@@ -26,14 +27,18 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-markdown": "^10.1.0",
-    "tz-lookup": "^6.1.25"
+    "topojson-client": "^3.1.0",
+    "tz-lookup": "^6.1.25",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
     "@types/better-sqlite3": "^9.6.0",
+    "@types/d3-geo": "^3.1.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
     "cities.json": "^1.1.66",
     "drizzle-kit": "^0.31.11",
     "eslint": "^9",

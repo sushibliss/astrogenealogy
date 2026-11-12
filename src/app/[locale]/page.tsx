@@ -142,7 +142,7 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
         </div>
       </section>
 
-      <section className="band relative overflow-hidden border-y border-ink">
+      <section className="band relative mx-3 overflow-hidden rounded-[2.5rem] sm:mx-6">
         <Starfield count={40} seed={23} />
         <div className="wrap relative grid gap-10 py-16 md:grid-cols-3">
           {([1, 2, 3] as const).map((n) => (

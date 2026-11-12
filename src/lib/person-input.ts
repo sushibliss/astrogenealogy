@@ -16,6 +16,7 @@ export type PersonInput = {
   living: Living;
   deathDate: string;
   deathPlace: string;
+  residences: string;
   notes: string;
 };
 
@@ -32,6 +33,7 @@ export function emptyPerson(path: string): PersonInput {
     living: path === "" ? "alive" : "unknown",
     deathDate: "",
     deathPlace: "",
+    residences: "",
     notes: "",
   };
 }
@@ -49,6 +51,7 @@ export function personToInput(p: Person): PersonInput {
     living: p.living,
     deathDate: p.deathDate ?? "",
     deathPlace: p.deathPlace,
+    residences: p.residences,
     notes: p.notes,
   };
 }
@@ -98,6 +101,12 @@ export function cleanPersonInput(raw: unknown) {
     birthTz: tz,
     deathDate: living === "alive" ? null : partialDate(r.deathDate),
     deathPlace: living === "alive" ? "" : str(r.deathPlace, 160),
+    residences: str(r.residences, 800)
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .slice(0, 12)
+      .join("\n"),
     living,
     notes: str(r.notes, 2000),
   };

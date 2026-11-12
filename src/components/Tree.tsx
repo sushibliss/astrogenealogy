@@ -56,8 +56,8 @@ export function Tree({
         )}
       </>
     );
-    const cls = `block w-full border px-2.5 ${compact ? "py-1" : "py-1.5"} text-left fade-colors ${
-      current ? "border-accent bg-accent text-paper" : "border-ink bg-paper-light"
+    const cls = `block w-full rounded-xl border px-3 ${compact ? "py-1" : "py-1.5"} text-left fade-colors ${
+      current ? "border-accent bg-accent text-paper" : "border-hair bg-paper-light"
     } ${href && !current ? "hover:border-accent hover:bg-accent hover:text-paper" : ""}`;
     return href ? (
       <Link href={href} className={cls} aria-current={current ? "page" : undefined}>
@@ -90,7 +90,7 @@ export function Tree({
                   gridRow: `${slot(p.path) * span + 1} / span ${span}`,
                 }}
               >
-                {p.path.length > 0 && <span aria-hidden className="absolute -left-5 top-1/2 w-5 border-t border-ink" />}
+                {p.path.length > 0 && <span aria-hidden className="absolute -left-5 top-1/2 w-5 border-t border-hair" />}
                 {cell(p)}
               </div>
             );

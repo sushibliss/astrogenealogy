@@ -10,7 +10,9 @@
     "login": "Sign in",
     "register": "Start",
     "language": "Language",
-    "theme": "Switch between light and dark"
+    "theme": "Switch between light and dark",
+    "soundOn": "Sound on names: on",
+    "soundOff": "Sound on names: off"
   },
   "footer": {
     "tagline": "Origen. Researched by a person, read under the sky they were born under.",
@@ -173,7 +175,10 @@
     "newEyebrow": "Add an ancestor found during research",
     "parentOf": "{side} of {name}",
     "father": "Father",
-    "mother": "Mother"
+    "mother": "Mother",
+    "residences": "Places they lived",
+    "residencesPlaceholder": "Girona (1930–1955)",
+    "residencesHint": "One place per line. Add the years in brackets if you know them. They appear on the family map."
   },
   "request": {
     "submittedOn": "Submitted",
@@ -190,7 +195,10 @@
     "reports": "Birth reports",
     "reportsLead": "One for each person with a full birth date. Without a birth hour a report shows the planets by sign only.",
     "share": "Invite relatives to read",
-    "focus": "What you asked us to look for"
+    "focus": "What you asked us to look for",
+    "readOn": "Read on",
+    "map": "The family’s places",
+    "mapLead": "Where each person was born, lived and died. Rest on a name to follow their path, or on a place to see who was there."
   },
   "invites": {
     "lead": "Create a private link for a relative. Anyone with the link can read the published findings and the birth reports of deceased ancestors. They cannot edit anything, and living people appear by relationship only.",
@@ -323,7 +331,10 @@
     "tree": "Family tree",
     "treeLead": "One generation per orbit, paternal line on the left. The outer band is the zodiac, with each person’s Sun marked where it stood at their birth.",
     "reports": "Birth reports",
-    "reportsLead": "One for each ancestor with a full birth date."
+    "reportsLead": "One for each ancestor with a full birth date.",
+    "readOn": "Read on",
+    "map": "The family’s places",
+    "mapLead": "Where each person was born, lived and died. Rest on a name to follow their path, or on a place to see who was there."
   },
   "privacy": {
     "eyebrow": "Placeholder",
@@ -366,5 +377,18 @@
     "error_failed": "The upload did not go through. Try again.",
     "sectionTitle": "Sources",
     "sectionLead": "The original records behind this person’s details."
+  },
+  "map": {
+    "title": "Map of the family’s places",
+    "born": "Born",
+    "lived": "Lived",
+    "died": "Died",
+    "hint": "Choose a name or a place. Double-click the map to move closer.",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "reset": "Show everything",
+    "unplaced": "not yet placed on the map",
+    "show": "Show",
+    "unknown": "Name unknown"
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { MAX_GEN, PRELUDE, STEP } from "@/lib/tree-timing";
 import { Unveil } from "./Unveil";
 
 export type TreePerson = {
@@ -31,7 +32,6 @@ export type TreeLabels = Record<
   string
 >;
 
-const MAX_GEN = 4;
 /** radius of each generation's orbit */
 const RINGS = [0, 150, 290, 420, 510];
 const NODE = [15, 12.5, 11.5, 10.5, 9.5];
@@ -40,9 +40,6 @@ const FAN_START = 150;
 const FAN_SPAN = 120;
 const EDGE = 7;
 const ROMAN = ["", "I", "II", "III", "IV"];
-/** seconds of sky-drawing before the first generation appears */
-const PRELUDE = 1.5;
-const STEP = 1.15;
 
 const slotOf = (path: string) => path.split("").reduce((n, c) => n * 2 + (c === "m" ? 1 : 0), 0);
 const angleOf = (path: string) =>
@@ -92,7 +89,8 @@ export function ConstellationChart({
 
   const at = (deg: number, r: number) => {
     const a = (deg * Math.PI) / 180;
-    return [cx + r * Math.cos(a), cy - r * Math.sin(a)] as const;
+    // rounded, so the server and the browser agree to the last digit
+    return [Math.round((cx + r * Math.cos(a)) * 100) / 100, Math.round((cy - r * Math.sin(a)) * 100) / 100] as const;
   };
   const pos = (path: string, r = RINGS[path.length]) => at(angleOf(path), r);
   const arc = (r: number) =>
@@ -143,9 +141,19 @@ export function ConstellationChart({
             role="group"
             aria-label={labels.title}
             className="mx-auto block h-auto w-full"
-            style={{ minWidth: Math.min(W, 900), maxWidth: W }}
+            style={{ minWidth: Math.min(W, 900), maxWidth: W, maxHeight: "max(26rem, calc(100svh - 17.5rem))" }}
             onMouseLeave={() => setHoverId(null)}
           >
+            <defs>
+              <radialGradient id="c-aura">
+                <stop offset="0" stopColor="var(--color-accent)" stopOpacity={0.3} />
+                <stop offset="0.45" stopColor="var(--color-accent-2)" stopOpacity={0.08} />
+                <stop offset="1" stopColor="var(--color-accent-2)" stopOpacity={0} />
+              </radialGradient>
+            </defs>
+            {/* the glow everything grows out of */}
+            <circle cx={cx} cy={cy} r={RINGS[2]} fill="url(#c-aura)" className="c-aura" />
+
             {/* a line of light sweeps the sky once */}
             <line
               x1={cx}
@@ -268,7 +276,7 @@ export function ConstellationChart({
                         pathLength={1}
                         stroke={lit || p.found ? "var(--color-accent)" : "currentColor"}
                         strokeWidth={(p.path.length === 1 ? 1.75 : p.path.length === 2 ? 1.4 : 1.1) + (lit ? 0.9 : 0)}
-                        className="c-link"
+                        className={`c-link ${lit ? "is-lit" : ""}`}
                         style={d(when(p.path, -0.85))}
                       />
                     </g>
@@ -312,7 +320,7 @@ export function ConstellationChart({
               const r = p.sun || p.hidden ? NODE[g] : NODE[g] * 0.62;
               const isSelected = selectedId === p.id;
               const tone = p.found ? "var(--color-accent)" : "currentColor";
-              const halo = { paintOrder: "stroke", stroke: "var(--color-paper)", strokeWidth: 5, strokeLinejoin: "round" } as const;
+              const halo = { paintOrder: "stroke", stroke: "var(--color-paper)", strokeOpacity: 0.85, strokeWidth: 5, strokeLinejoin: "round" } as const;
 
               let label: React.ReactNode;
               if (g === 0) {
@@ -397,7 +405,7 @@ export function ConstellationChart({
               );
 
               return (
-                <g key={p.id} transform={`translate(${x} ${y})`} style={fade(dimmed(p.path))} onMouseEnter={() => setHoverId(p.id)}>
+                <g key={p.id} transform={`translate(${x} ${y})`} style={fade(dimmed(p.path))} data-chime={p.name} onMouseEnter={() => setHoverId(p.id)}>
                   {p.hidden ? (
                     body
                   ) : (
@@ -425,7 +433,7 @@ export function ConstellationChart({
           </svg>
         </Unveil>
 
-        <ul className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-soft">
+        <ul className="reveal-late mt-4 flex flex-wrap justify-center gap-x-6 gap-y-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-soft">
           <li>
             <span aria-hidden>●</span> {labels.legendIntake}
           </li>
@@ -451,16 +459,16 @@ export function ConstellationChart({
             {labels.legendKin}
           </li>
         </ul>
-        {!selected && <p className="mt-3 text-center text-sm text-ink-soft">{labels.hint}</p>}
+        {!selected && <p className="reveal-late mt-3 text-center text-sm text-ink-soft">{labels.hint}</p>}
 
         {deeper.length > 0 && (
-          <div className="mt-8">
+          <div className="reveal-late mt-8">
             <p className="eyebrow mb-2">{labels.deeper}</p>
             <ul className="grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
               {deeper.map((p) => (
                 <li key={p.id}>
                   {p.hidden ? (
-                    <div className="card border-dashed px-3 py-2">
+                    <div className="soft-card border-dashed px-4 py-2.5">
                       <span className="eyebrow block truncate !text-[0.625rem]">{p.relation}</span>
                       <span className="block truncate font-semibold">{p.name}</span>
                     </div>
@@ -468,7 +476,8 @@ export function ConstellationChart({
                     <button
                       type="button"
                       onClick={() => open(p)}
-                      className="card fade-colors block w-full cursor-pointer px-3 py-2 text-left hover:border-accent"
+                      data-chime={p.name}
+                      className="soft-card block w-full cursor-pointer px-4 py-2.5 text-left"
                     >
                       <span className="eyebrow block truncate !text-[0.625rem]">{p.relation}</span>
                       <span className="block truncate font-semibold">{p.name}</span>
@@ -482,13 +491,13 @@ export function ConstellationChart({
       </div>
 
       {selected && (
-        <aside ref={cardRef} key={selected.id} className="card person-card relative mt-8 p-5 lg:sticky lg:top-6 lg:mt-0" aria-live="polite">
+        <aside ref={cardRef} key={selected.id} className="glass-card person-card relative mt-8 p-6 lg:sticky lg:top-6 lg:mt-0" aria-live="polite">
           <button
             type="button"
             onClick={() => setSelectedId(null)}
             aria-label={labels.close}
             title={labels.close}
-            className="absolute top-3 right-3 grid h-7 w-7 cursor-pointer place-items-center border border-ink text-sm leading-none transition-colors duration-300 hover:bg-ink hover:text-paper"
+            className="icon-button absolute top-4 right-4 !h-8 !w-8 text-base leading-none"
           >
             ×
           </button>
@@ -517,7 +526,7 @@ export function ConstellationChart({
             {selected.sun ? (
               <>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="border border-ink px-3 py-2">
+                  <div className="rounded-2xl border border-hair px-3.5 py-2.5">
                     <p className="eyebrow">
                       <span className="glyph">{labels.sunGlyph}</span> {labels.sun}
                     </p>
@@ -525,7 +534,7 @@ export function ConstellationChart({
                       <span className="glyph text-accent">{selected.sun.glyph}</span> {selected.sun.name}
                     </p>
                   </div>
-                  <div className={`border px-3 py-2 ${selected.moon ? "border-ink" : "border-dashed border-ink"}`}>
+                  <div className={`rounded-2xl border px-3.5 py-2.5 ${selected.moon ? "border-hair" : "border-dashed border-ink-faint"}`}>
                     <p className="eyebrow">
                       <span className="glyph">{labels.moonGlyph}</span> {labels.moon}
                     </p>
@@ -570,9 +579,9 @@ export function ConstellationChart({
                       href={doc.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="fade-colors flex items-center gap-2.5 border border-ink px-3 py-2 text-sm hover:border-accent hover:text-accent"
+                      className="fade-colors flex items-center gap-2.5 rounded-2xl border border-hair px-3.5 py-2.5 text-sm hover:border-accent hover:text-accent"
                     >
-                      <span className="shrink-0 border border-current px-1 font-mono text-[0.5625rem] uppercase tracking-[0.1em]">
+                      <span className="shrink-0 rounded-full border border-current px-2 font-mono text-[0.5625rem] uppercase tracking-[0.1em]">
                         {doc.kind === "file" ? labels.pdf : labels.link}
                       </span>
                       <span className="min-w-0 flex-1">{doc.title}</span>

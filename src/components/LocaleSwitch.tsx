@@ -11,7 +11,7 @@ export function LocaleSwitch() {
   const pathname = usePathname();
   const params = useParams();
   return (
-    <div className="flex items-center border border-ink font-mono text-xs" role="group" aria-label={t("language")}>
+    <div className="flex items-center overflow-hidden rounded-full border border-ink-faint font-mono text-xs" role="group" aria-label={t("language")}>
       {routing.locales.map((l) => (
         <Link
           key={l}
