@@ -141,7 +141,7 @@ export function ConstellationChart({
             role="group"
             aria-label={labels.title}
             className="mx-auto block h-auto w-full"
-            style={{ minWidth: Math.min(W, 900), maxWidth: W, maxHeight: "max(26rem, calc(100svh - 17.5rem))" }}
+            style={{ minWidth: Math.min(W, 900), maxHeight: "max(28rem, calc(100svh - 8.5rem))" }}
             onMouseLeave={() => setHoverId(null)}
           >
             <defs>
@@ -153,18 +153,6 @@ export function ConstellationChart({
             </defs>
             {/* the glow everything grows out of */}
             <circle cx={cx} cy={cy} r={RINGS[2]} fill="url(#c-aura)" className="c-aura" />
-
-            {/* a line of light sweeps the sky once */}
-            <line
-              x1={cx}
-              y1={cy - 30}
-              x2={cx}
-              y2={cy - bandOut}
-              stroke="var(--color-accent)"
-              strokeWidth={1}
-              className="c-sweep"
-              style={{ transformOrigin: `${cx}px ${cy}px` }}
-            />
 
             {/* the zodiac band */}
             <g fill="none" stroke="currentColor">
@@ -277,7 +265,7 @@ export function ConstellationChart({
                         stroke={lit || p.found ? "var(--color-accent)" : "currentColor"}
                         strokeWidth={(p.path.length === 1 ? 1.75 : p.path.length === 2 ? 1.4 : 1.1) + (lit ? 0.9 : 0)}
                         className={`c-link ${lit ? "is-lit" : ""}`}
-                        style={d(when(p.path, -0.85))}
+                        style={d(when(p.path, -1.7))}
                       />
                     </g>
                   );
@@ -305,7 +293,7 @@ export function ConstellationChart({
                     stroke="var(--color-paper)"
                     strokeWidth={1.5}
                     className="c-node"
-                    style={{ ...d(when(p.path, 0.7)), transitionProperty: "opacity, transform, r" }}
+                    style={{ ...d(when(p.path, 1)), transitionProperty: "opacity, transform, r" }}
                   />
                 </g>
               );
@@ -398,7 +386,7 @@ export function ConstellationChart({
                       )}
                     </g>
                   </g>
-                  <g className="c-label" fill="currentColor" style={d(when(p.path, 0.35))}>
+                  <g className="c-label" fill="currentColor" style={d(when(p.path, 0.6))}>
                     {label}
                   </g>
                 </>

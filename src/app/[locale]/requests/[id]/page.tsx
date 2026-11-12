@@ -33,43 +33,44 @@ export default async function RequestPage({ params }: { params: Promise<{ locale
 
   const map = await PlacesMap({ people, locale });
 
+  const heading = (
+    <header className="wrap pt-12 pb-10">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <StatusBadge status={request.status} />
+          {request.submittedAt && (
+            <span className="eyebrow">
+              {t("submittedOn")} {fmt.format(request.submittedAt)}
+            </span>
+          )}
+          {access.isAdmin && (
+            <Link href={`/admin/requests/${id}`} className="btn-ghost btn-sm no-print">
+              {t("openAdmin")}
+            </Link>
+          )}
+        </div>
+        <h1 className="display max-w-4xl text-4xl sm:text-6xl">
+          {published ? publication!.title : t("titleFor", { name: (self && fullName(self)) || "—" })}
+        </h1>
+        {published ? (
+          <p className="mt-4 text-ink-soft">{t("publishedOn", { date: fmt.format(publication!.publishedAt!) })}</p>
+        ) : (
+          <p className="notice mt-6 max-w-2xl">{t(`explain_${request.status}`)}</p>
+        )}
+      </header>
+  );
+
   return (
     <SlowReveal after={published ? unveilSeconds(people.map((p) => p.path)) : 0}>
-      <SkyHero
-        eyebrow={
-          <>
-            <StatusBadge status={request.status} />
-            {request.submittedAt && (
-              <span className="eyebrow">
-                {t("submittedOn")} {fmt.format(request.submittedAt)}
-              </span>
-            )}
-            {access.isAdmin && (
-              <Link href={`/admin/requests/${id}`} className="btn-ghost btn-sm no-print">
-                {t("openAdmin")}
-              </Link>
-            )}
-          </>
-        }
-        title={published ? publication!.title : t("titleFor", { name: (self && fullName(self)) || "—" })}
-        sub={
-          published ? (
-            t("publishedOn", { date: fmt.format(publication!.publishedAt!) })
-          ) : (
-            <p className="notice mx-auto mt-2 max-w-2xl text-left text-ink">{t(`explain_${request.status}`)}</p>
-          )
-        }
-        cue={published ? { label: t("readOn"), href: "#findings" } : undefined}
-      >
+      {/* until the findings are out, the status comes first; afterwards the sky does */}
+      {!published && heading}
+      <SkyHero cue={published ? { label: t("readOn"), href: "#findings" } : undefined}>
         <FamilyConstellation people={people} locale={locale} base={base} />
-        <p className="reveal-late mx-auto mt-3 max-w-xl text-center text-xs text-ink-faint" style={later(0.5)}>
-          {t("treeLead")}
-        </p>
       </SkyHero>
 
       {published && (
         <section id="findings" className="reveal-late scroll-mt-6" style={later(0.3)}>
-          <div className="wrap grid gap-x-12 gap-y-6 py-16 lg:grid-cols-[14rem_1fr]">
+          {heading}
+          <div className="wrap grid gap-x-12 gap-y-6 pt-4 pb-16 lg:grid-cols-[14rem_1fr]">
             <h2 className="display text-3xl">{t("findings")}</h2>
             <Markdown>{publication!.body}</Markdown>
           </div>

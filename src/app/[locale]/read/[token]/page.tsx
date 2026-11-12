@@ -29,20 +29,17 @@ export default async function ReadPage({ params }: { params: Promise<{ locale: s
   return (
     <SlowReveal after={unveilSeconds(people.map((p) => p.path))}>
       {/* the sky and the tree come first; everything else waits for them */}
-      <SkyHero
-        eyebrow={<p className="pill">{t("badge")}</p>}
-        title={publication!.title}
-        sub={t("publishedOn", { date: fmt.format(publication!.publishedAt!) })}
-        cue={{ label: t("readOn"), href: "#findings" }}
-      >
+      <SkyHero cue={{ label: t("readOn"), href: "#findings" }}>
         <FamilyConstellation people={people} locale={locale} base={base} hiddenIds={hiddenIds} token={token} />
-        <p className="reveal-late mx-auto mt-3 max-w-xl text-center text-xs text-ink-faint" style={later(0.5)}>
-          {t("treeLead")}
-        </p>
       </SkyHero>
 
       <section id="findings" className="reveal-late scroll-mt-6" style={later(0.3)}>
-        <div className="wrap grid gap-x-12 gap-y-6 py-16 lg:grid-cols-[14rem_1fr]">
+        <header className="wrap pt-16">
+          <p className="pill mb-4">{t("badge")}</p>
+          <h1 className="display max-w-4xl text-4xl sm:text-6xl">{publication!.title}</h1>
+          <p className="mt-4 text-ink-soft">{t("publishedOn", { date: fmt.format(publication!.publishedAt!) })}</p>
+        </header>
+        <div className="wrap grid gap-x-12 gap-y-6 py-14 lg:grid-cols-[14rem_1fr]">
           <h2 className="display text-3xl">{t("findings")}</h2>
           <Markdown>{publication!.body}</Markdown>
         </div>

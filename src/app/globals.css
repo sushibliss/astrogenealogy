@@ -371,20 +371,35 @@ body {
 }
 
 /* ---------- family constellation: unveils in stages, then responds to the pointer ---------- */
+/* everything eases in slowly and overlaps its neighbours, so no step is ever seen starting */
+.constellation svg {
+  /* the glow under the requester melts into the sky instead of ending at the drawing's edge */
+  mask-image: linear-gradient(#000 calc(100% - 2.75rem), transparent);
+  opacity: 0;
+  transform: scale(1.06);
+  transform-origin: 50% 85%;
+  transition:
+    opacity 3s ease,
+    transform 11s cubic-bezier(0.16, 0.6, 0.2, 1);
+}
+.constellation[data-unveiled="true"] svg {
+  opacity: 1;
+  transform: none;
+}
 .constellation .c-link {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   transition:
-    stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) var(--d, 0s),
+    stroke-dashoffset 2.6s cubic-bezier(0.5, 0, 0.2, 1) var(--d, 0s),
     stroke 0.6s ease,
     stroke-width 0.6s ease;
 }
 .constellation .c-node {
   opacity: 0;
-  transform: scale(0.1);
+  transform: scale(0.6);
   transition:
-    opacity 0.9s ease var(--d, 0s),
-    transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.5) var(--d, 0s),
+    opacity 2.2s ease var(--d, 0s),
+    transform 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
     r 0.5s ease;
 }
 .constellation .c-label,
@@ -393,16 +408,16 @@ body {
 .constellation .c-orbit,
 .constellation .c-kin {
   opacity: 0;
-  transition: opacity 1.2s ease var(--d, 0s);
+  transition: opacity 2.4s ease var(--d, 0s);
 }
 .constellation .c-sign {
   opacity: 0;
-  transform: scale(0.3) rotate(-30deg);
+  transform: scale(0.8);
   transform-box: fill-box;
   transform-origin: center;
   transition:
-    opacity 0.8s ease var(--d, 0s),
-    transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.4) var(--d, 0s),
+    opacity 2s ease var(--d, 0s),
+    transform 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
     fill 0.5s ease;
 }
 .constellation .c-halo,
@@ -448,10 +463,10 @@ body {
   animation: halo 5s ease-in-out var(--d, 0s) infinite;
 }
 .constellation[data-unveiled="true"] .c-ripple {
-  animation: ripple 3.2s ease-out 0.2s 2 both;
+  animation: ripple 6s cubic-bezier(0.2, 0.6, 0.3, 1) 0.8s 2 both;
 }
 .constellation[data-unveiled="true"] .c-ripple-2 {
-  animation-delay: 1.3s;
+  animation-delay: 2.6s;
 }
 .constellation[data-unveiled="true"] .c-sweep {
   animation: sweep 3.4s cubic-bezier(0.45, 0, 0.55, 1) 0.2s 1 both;
@@ -461,10 +476,12 @@ body {
   opacity: 1;
   transform: scale(1.45);
   transition-delay: 0s;
+  transition-duration: 0.6s;
 }
 .constellation[data-unveiled="true"] .c-kin.is-lit {
   opacity: 0.95;
   transition-delay: 0s;
+  transition-duration: 0.6s;
 }
 .constellation[data-unveiled="true"] .c-ray.is-lit {
   opacity: 0.7;
@@ -516,8 +533,11 @@ body {
 }
 @keyframes ripple {
   0% {
-    opacity: 0.7;
+    opacity: 0;
     transform: scale(0.05);
+  }
+  18% {
+    opacity: 0.4;
   }
   100% {
     opacity: 0;
@@ -545,6 +565,7 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .constellation svg,
   .constellation .c-link,
   .constellation .c-node,
   .constellation .c-label,
@@ -608,10 +629,72 @@ body {
 }
 .constellation .c-aura {
   opacity: 0;
-  transition: opacity 3s ease 0.4s;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 5s ease 0.6s;
 }
 .constellation[data-unveiled="true"] .c-aura {
   opacity: 1;
+}
+.sky-hero::before {
+  /* the edges fall away into the dark, so the eye stays on the tree */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(75% 70% at 50% 58%, transparent 55%, rgb(3 2 8 / 0.75));
+}
+.sky-dust {
+  /* the faintest stars, and a pale river of light crossing the sky */
+  background-image:
+    linear-gradient(118deg, transparent 30%, rgb(170 160 235 / 0.07) 44%, rgb(255 226 190 / 0.08) 50%, rgb(170 160 235 / 0.06) 57%, transparent 70%),
+    radial-gradient(1px 1px at 23px 41px, rgb(255 244 220 / 0.8), transparent),
+    radial-gradient(1px 1px at 97px 133px, rgb(255 244 220 / 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 171px 67px, rgb(210 220 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 213px 201px, rgb(255 244 220 / 0.5), transparent),
+    radial-gradient(1px 1px at 61px 229px, rgb(210 220 255 / 0.55), transparent),
+    radial-gradient(1.3px 1.3px at 139px 17px, rgb(255 230 190 / 0.6), transparent);
+  background-size:
+    100% 100%,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px;
+  transform: translate3d(calc(var(--px, 0) * -6px), calc(var(--py, 0) * -4px), 0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* the sky itself comes up out of the dark before anything is drawn on it */
+  .sky-dust {
+    animation: fade-in 3.5s ease both;
+  }
+  .sky-far {
+    animation: sky-in 5s ease 0.4s both;
+  }
+  .sky-near {
+    animation: fade-in 5s ease 1.4s both;
+  }
+  .constellation[data-unveiled="true"] .c-aura {
+    animation: breathe 9s ease-in-out 6s infinite;
+  }
+}
+@keyframes sky-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
 }
 .scroll-cue {
   color: var(--color-ink-soft);
@@ -635,9 +718,6 @@ body {
   pointer-events: auto;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .sky-title {
-    animation: fade-in 2.4s ease 0.2s both;
-  }
   .slow-reveal[data-revealed="true"] .scroll-cue svg {
     animation: cue 2.6s ease-in-out 2s infinite;
   }
