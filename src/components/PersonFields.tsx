@@ -135,7 +135,7 @@ function PlaceField({
         onBlur={() => setTimeout(() => setOpen(false), 150)}
       />
       {open && options.length > 0 && !located && (
-        <ul className="absolute z-20 mt-px max-h-64 w-full overflow-auto border border-ink bg-paper-light shadow-[4px_4px_0_0_var(--color-ink)]">
+        <ul className="absolute z-20 mt-1.5 max-h-64 w-full overflow-auto rounded-2xl border border-hair bg-paper-light py-1 shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)]">
           {options.map((p, i) => (
             <li key={i}>
               <button
@@ -214,11 +214,11 @@ export function PersonFields({
       {showLiving && (
         <fieldset>
           <legend className="label">{t("living")}</legend>
-          <div className="flex flex-wrap border border-ink text-sm">
+          <div className="flex flex-wrap overflow-hidden rounded-full border border-ink-faint text-sm">
             {(["alive", "deceased", "unknown"] as const).map((opt) => (
               <label
                 key={opt}
-                className={`flex-1 cursor-pointer border-ink px-3 py-2 text-center not-first:border-l has-focus-visible:outline-2 ${
+                className={`flex-1 cursor-pointer border-hair px-3 py-2 text-center not-first:border-l has-focus-visible:outline-2 ${
                   value.living === opt ? "bg-ink text-paper" : "bg-paper-light hover:bg-paper-deep"
                 }`}
               >
@@ -247,6 +247,21 @@ export function PersonFields({
           </div>
         </div>
       )}
+
+      <div>
+        <label className="label" htmlFor={`${id}-r`}>
+          {t("residences")}
+        </label>
+        <textarea
+          id={`${id}-r`}
+          rows={2}
+          className="field"
+          placeholder={t("residencesPlaceholder")}
+          value={value.residences}
+          onChange={(e) => set({ residences: e.target.value })}
+        />
+        <p className="mt-1.5 text-xs text-ink-soft">{t("residencesHint")}</p>
+      </div>
 
       <div>
         <label className="label" htmlFor={`${id}-n`}>

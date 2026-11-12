@@ -43,7 +43,7 @@ export function PublicationEditor({
           <label className="label !mb-0" htmlFor="pub-body">
             {t("pubBody")}
           </label>
-          <div className="flex border border-ink font-mono text-[0.6875rem] uppercase tracking-[0.1em]">
+          <div className="flex overflow-hidden rounded-full border border-ink-faint font-mono text-[0.6875rem] uppercase tracking-[0.1em]">
             <button
               type="button"
               onClick={() => setPreview(false)}
@@ -54,7 +54,7 @@ export function PublicationEditor({
             <button
               type="button"
               onClick={() => setPreview(true)}
-              className={`cursor-pointer border-l border-ink px-2.5 py-1 ${preview ? "bg-ink text-paper" : ""}`}
+              className={`cursor-pointer border-l border-hair px-2.5 py-1 ${preview ? "bg-ink text-paper" : ""}`}
             >
               {t("preview")}
             </button>

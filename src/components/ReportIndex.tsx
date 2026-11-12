@@ -20,10 +20,11 @@ export async function ReportIndex({ people, locale, base }: { people: Person[]; 
           <li key={p.id}>
             <Link
               href={`${base}/people/${p.id}`}
+              data-chime={fullName(p) || t("unknown")}
               className="card group grid h-full grid-cols-[3.25rem_1fr] items-center gap-3 p-3.5 fade-colors hover:border-accent hover:bg-accent hover:text-paper"
             >
               <span
-                className={`glyph grid h-13 w-13 place-items-center border border-current text-3xl leading-none ${chart ? "" : "border-dashed opacity-50"}`}
+                className={`glyph grid h-13 w-13 place-items-center rounded-full border border-current text-3xl leading-none ${chart ? "" : "border-dashed opacity-50"}`}
                 aria-hidden
               >
                 {sun ? SIGN_GLYPH[SIGNS[sun.sign]] : "·"}

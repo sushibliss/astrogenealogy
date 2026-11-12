@@ -83,6 +83,16 @@ The sample families are invented.
   Sun sign, the outer band is the zodiac with every Sun marked on it, and people
   who share a sign are joined by a thread. Hovering lights a person's line back
   to the requester; selecting them opens a card beside the tree.
+- **Opening scene**: a published request opens on a night sky with the tree drawing
+  itself; the findings, map and reports fade in once it has finished (or as soon as
+  the reader scrolls). Reduced-motion settings skip the wait.
+- **Family places map**: where each person was born, lived and died, drawn on the
+  server from the bundled Natural Earth outlines (`world-atlas`), so no map tiles are
+  fetched and no place leaves the app. Places lived are entered one per line on the
+  person form; free-text places are located with the offline gazetteer.
+- **Sound**: resting the mouse on a name rings a quiet note (each name has its own).
+  Browsers allow sound only after a first click or key press; the speaker button in
+  the header mutes it.
 - **Original documents**: the researcher can attach PDFs (up to 10 MB) or links
   to a person from that person's edit page. They appear on the person's card
   and birth report. Uploaded files live in `data/uploads/` and are only served

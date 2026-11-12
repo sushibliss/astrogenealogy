@@ -67,14 +67,14 @@ export default async function AdminRequest({ params }: { params: Promise<{ local
         </div>
       </header>
 
-      <section className="border-t border-ink">
+      <section className="border-t border-hair">
         <div className="wrap py-10">
           <h2 className="display text-3xl">{t("people")}</h2>
           <p className="mt-2 mb-5 max-w-2xl text-sm text-ink-soft">{t("peopleLead")}</p>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[46rem] border-collapse text-sm">
               <thead>
-                <tr className="border-y border-ink text-left">
+                <tr className="border-y border-hair text-left">
                   {[t("colRelation"), t("colName"), t("colBirth"), t("colDeath"), ""].map((h, i) => (
                     <th key={i} className="eyebrow px-2 py-2 font-normal first:pl-0">
                       {h}
@@ -88,7 +88,7 @@ export default async function AdminRequest({ params }: { params: Promise<{ local
                     <td className="py-2.5 pr-2">
                       {relationLabel(p.path, locale)}
                       {p.source === "research" && (
-                        <span className="ml-1.5 border border-ink px-1 font-mono text-[0.625rem] uppercase">{t("found")}</span>
+                        <span className="ml-1.5 rounded-full border border-ink px-2 font-mono text-[0.625rem] uppercase">{t("found")}</span>
                       )}
                     </td>
                     <td className="px-2 py-2.5 font-semibold">
@@ -141,7 +141,7 @@ export default async function AdminRequest({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <section className="border-t border-ink bg-paper-deep">
+      <section className="border-t border-hair bg-paper-deep">
         <div className="wrap max-w-4xl py-10">
           <h2 className="display text-3xl">{t("publication")}</h2>
           <p className="mt-2 mb-5 max-w-2xl text-sm text-ink-soft">{isPublished ? t("publicationLive") : t("publicationLead")}</p>
@@ -154,7 +154,7 @@ export default async function AdminRequest({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <section className="border-t border-ink">
+      <section className="border-t border-hair">
         <div className="wrap py-10">
           <h2 className="display mb-3 text-3xl">{t("invites")}</h2>
           <InvitePanel requestId={id} locale={locale} published={request.status === "published" && isPublished} />

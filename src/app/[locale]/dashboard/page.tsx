@@ -40,7 +40,7 @@ export default async function Dashboard({ params }: { params: Promise<{ locale: 
           </Link>
         </div>
       ) : (
-        <ul className="mt-10 border-t border-ink">
+        <ul className="mt-10 border-t border-hair">
           {requests.map((r) => {
             const people = db.select().from(schema.people).where(eq(schema.people.requestId, r.id)).all();
             const self = people.find((p) => p.path === "");
@@ -48,7 +48,7 @@ export default async function Dashboard({ params }: { params: Promise<{ locale: 
             const title =
               (r.status === "published" && pub?.title) || t("requestFor", { name: (self && fullName(self)) || "—" });
             return (
-              <li key={r.id} className="border-b border-ink">
+              <li key={r.id} className="border-b border-hair">
                 <Link
                   href={r.status === "draft" ? `/requests/${r.id}/edit` : `/requests/${r.id}`}
                   className="group grid gap-x-6 gap-y-2 py-5 sm:grid-cols-[1fr_auto] sm:items-center"

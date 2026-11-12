@@ -15,6 +15,13 @@
       "when": 1794352034471,
       "tag": "0001_mushy_juggernaut",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1794508403162,
+      "tag": "0002_harsh_eddie_brock",
+      "breakpoints": true
     }
   ]
 }

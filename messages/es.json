@@ -10,7 +10,9 @@
     "login": "Entrar",
     "register": "Empezar",
     "language": "Idioma",
-    "theme": "Cambiar entre claro y oscuro"
+    "theme": "Cambiar entre claro y oscuro",
+    "soundOn": "Sonido al pasar por los nombres: activado",
+    "soundOff": "Sonido al pasar por los nombres: desactivado"
   },
   "footer": {
     "tagline": "Origen. Investigado por una persona, leído bajo el cielo con el que nacieron.",
@@ -173,7 +175,10 @@
     "newEyebrow": "Añadir un antepasado encontrado en la investigación",
     "parentOf": "{side} de {name}",
     "father": "Padre",
-    "mother": "Madre"
+    "mother": "Madre",
+    "residences": "Lugares donde vivió",
+    "residencesPlaceholder": "Girona (1930–1955)",
+    "residencesHint": "Un lugar por línea. Añade los años entre paréntesis si los sabes. Aparecen en el mapa de la familia."
   },
   "request": {
     "submittedOn": "Enviada el",
@@ -190,7 +195,10 @@
     "reports": "Informes natales",
     "reportsLead": "Uno por cada persona con fecha de nacimiento completa. Sin hora de nacimiento, el informe muestra solo los planetas por signo.",
     "share": "Invita a familiares a leer",
-    "focus": "Lo que nos pediste buscar"
+    "focus": "Lo que nos pediste buscar",
+    "readOn": "Seguir leyendo",
+    "map": "Los lugares de la familia",
+    "mapLead": "Dónde nació, vivió y murió cada persona. Pasa por un nombre para seguir su camino, o por un lugar para ver quién estuvo allí."
   },
   "invites": {
     "lead": "Crea un enlace privado para un familiar. Quien tenga el enlace puede leer los hallazgos publicados y los informes natales de los antepasados fallecidos. No puede editar nada, y las personas vivas aparecen solo por su parentesco.",
@@ -323,7 +331,10 @@
     "tree": "Árbol familiar",
     "treeLead": "Una generación por órbita, con la línea paterna a la izquierda. La banda exterior es el zodíaco, con el Sol de cada persona marcado donde estaba al nacer.",
     "reports": "Informes natales",
-    "reportsLead": "Uno por cada antepasado con fecha de nacimiento completa."
+    "reportsLead": "Uno por cada antepasado con fecha de nacimiento completa.",
+    "readOn": "Seguir leyendo",
+    "map": "Los lugares de la familia",
+    "mapLead": "Dónde nació, vivió y murió cada persona. Pasa por un nombre para seguir su camino, o por un lugar para ver quién estuvo allí."
   },
   "privacy": {
     "eyebrow": "Texto provisional",
@@ -366,5 +377,18 @@
     "error_failed": "La subida no se ha completado. Inténtalo de nuevo.",
     "sectionTitle": "Fuentes",
     "sectionLead": "Los registros originales en los que se basan los datos de esta persona."
+  },
+  "map": {
+    "title": "Mapa de los lugares de la familia",
+    "born": "Nació",
+    "lived": "Vivió",
+    "died": "Murió",
+    "hint": "Elige un nombre o un lugar. Doble clic en el mapa para acercarte.",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "reset": "Ver todo",
+    "unplaced": "aún sin situar en el mapa",
+    "show": "Mostrar",
+    "unknown": "Nombre desconocido"
   }
 }

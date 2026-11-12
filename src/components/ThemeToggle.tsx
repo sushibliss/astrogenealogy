@@ -18,7 +18,7 @@ export function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="grid h-[1.625rem] w-[1.625rem] cursor-pointer place-items-center border border-ink transition-colors duration-300 hover:bg-ink hover:text-paper"
+      className="icon-button"
     >
       <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden>
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />

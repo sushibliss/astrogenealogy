@@ -115,32 +115,69 @@ body {
     @apply font-normal leading-[1] tracking-[-0.01em];
   }
   .btn {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-accent bg-accent px-5 py-2.5 text-sm font-semibold text-paper transition-colors duration-300 hover:bg-transparent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-accent bg-accent px-6 py-2.5 text-sm font-semibold text-paper transition-colors duration-300 hover:bg-transparent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-ghost {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 border border-ink px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-ink-faint px-6 py-2.5 text-sm font-semibold text-ink transition-colors duration-300 hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-sm {
-    @apply px-3 py-1.5 text-xs;
+    @apply px-4 py-1.5 text-xs;
   }
   .link {
     @apply underline decoration-accent decoration-1 underline-offset-4 transition-colors duration-300 hover:text-accent hover:decoration-2;
   }
   .field {
-    @apply w-full border border-ink bg-paper-light px-3 py-2 text-[0.9375rem] text-ink placeholder:text-ink-faint;
+    @apply w-full rounded-2xl border border-ink-faint bg-paper-light px-4 py-2.5 text-[0.9375rem] text-ink transition-colors duration-300 placeholder:text-ink-faint focus:border-accent;
   }
   .label {
     @apply mb-1.5 block font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-soft;
   }
   .card {
-    @apply border border-ink bg-paper-light;
+    @apply rounded-3xl border border-hair bg-paper-light;
+  }
+  /* a quieter card for lists of people */
+  .soft-card {
+    @apply rounded-2xl border border-hair bg-paper-light;
+    transition:
+      border-color 0.5s ease,
+      background-color 0.5s ease,
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+  button.soft-card:hover,
+  .soft-card.is-lit {
+    border-color: var(--color-accent-2);
+    background: var(--color-paper-deep);
+  }
+  /* the person card floating over the night sky */
+  .glass-card {
+    @apply rounded-[1.75rem] border border-hair;
+    background: color-mix(in srgb, var(--color-paper-light) 78%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  }
+  .pill {
+    @apply inline-block rounded-full border border-hair px-3.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-soft;
+  }
+  .chip {
+    @apply inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-hair px-3.5 py-1.5 text-sm text-ink-faint;
+    transition:
+      color 0.4s ease,
+      border-color 0.4s ease,
+      background-color 0.4s ease;
+  }
+  .chip.is-on {
+    @apply border-ink-faint bg-paper-light text-ink;
+  }
+  .icon-button {
+    @apply grid h-7 w-7 cursor-pointer place-items-center rounded-full border border-ink-faint transition-colors duration-300 hover:bg-ink hover:text-paper;
   }
   .glyph {
     font-family: var(--font-glyph);
     font-variant-emoji: text;
   }
   .notice {
-    @apply border-l-2 border-accent bg-paper-deep px-4 py-3 text-sm;
+    @apply rounded-2xl bg-paper-deep px-5 py-3.5 text-sm;
   }
   /* inverted section on the landing page */
   .band {
@@ -165,7 +202,7 @@ body {
 .prose-origen h1,
 .prose-origen h2 {
   font-family: var(--font-display);
-  @apply mt-10 mb-3 border-t border-ink pt-4 text-[1.75rem] font-normal;
+  @apply mt-10 mb-3 border-t border-hair pt-5 text-[1.75rem] font-normal;
 }
 .prose-origen h3 {
   @apply mt-7 mb-2 text-lg font-bold;
@@ -188,16 +225,16 @@ body {
   @apply underline underline-offset-4;
 }
 .prose-origen blockquote {
-  @apply my-6 border-l-2 border-ink bg-paper-deep px-4 py-3 text-[0.9375rem] text-ink-soft;
+  @apply my-6 rounded-2xl bg-paper-deep px-5 py-4 text-[0.9375rem] text-ink-soft;
 }
 .prose-origen blockquote p {
   @apply mb-0;
 }
 .prose-origen code {
-  @apply bg-paper-deep px-1 font-mono text-[0.875em];
+  @apply rounded-md bg-paper-deep px-1.5 font-mono text-[0.875em];
 }
 .prose-origen hr {
-  @apply my-8 border-ink;
+  @apply my-8 border-hair;
 }
 .prose-origen table {
   @apply mb-4 w-full border-collapse text-sm;
@@ -523,4 +560,166 @@ body {
   .constellation[data-unveiled="true"] .c-sweep {
     animation: none;
   }
+}
+
+/* ---------- the night: a patch of sky that stays dark in either theme ---------- */
+.night {
+  --color-paper: #0c0b13;
+  --color-paper-deep: #13111b;
+  --color-paper-light: #1b1825;
+  --color-ink: #efe6d2;
+  --color-ink-soft: #b3aa98;
+  --color-ink-faint: #7f776a;
+  --color-line: #efe6d2;
+  --color-hair: #373145;
+  --color-accent: #e9704a;
+  --color-accent-2: #e0b052;
+  --color-accent-3: #86c2ad;
+  --color-star: #e3d3a6;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  color-scheme: dark;
+}
+.sky-hero {
+  background:
+    radial-gradient(55% 42% at 50% 96%, rgb(233 112 74 / 0.2), transparent 72%),
+    radial-gradient(38% 32% at 12% 22%, rgb(134 194 173 / 0.1), transparent 70%),
+    radial-gradient(42% 36% at 88% 14%, rgb(224 176 82 / 0.09), transparent 70%),
+    radial-gradient(60% 50% at 70% 70%, rgb(93 78 160 / 0.12), transparent 75%),
+    linear-gradient(#090810, #0f0d18 55%, #15111a);
+}
+.sky-layer {
+  position: absolute;
+  inset: -3%;
+  transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sky-far {
+  transform: translate3d(calc(var(--px, 0) * -14px), calc(var(--py, 0) * -10px), 0);
+  opacity: 0.75;
+}
+.sky-near {
+  transform: translate3d(calc(var(--px, 0) * -38px), calc(var(--py, 0) * -26px), 0);
+}
+.night .c-mark {
+  filter: drop-shadow(0 0 7px rgb(224 176 82 / 0.5));
+}
+.constellation .c-link.is-lit {
+  filter: drop-shadow(0 0 5px var(--color-accent));
+}
+.constellation .c-aura {
+  opacity: 0;
+  transition: opacity 3s ease 0.4s;
+}
+.constellation[data-unveiled="true"] .c-aura {
+  opacity: 1;
+}
+.scroll-cue {
+  color: var(--color-ink-soft);
+}
+.scroll-cue:hover {
+  color: var(--color-accent-2);
+}
+
+/* ---------- slow reveal: the tree first, then everything else ---------- */
+.slow-reveal .reveal-late {
+  opacity: 0;
+  transform: translateY(22px);
+  pointer-events: none;
+  transition:
+    opacity 1.6s ease var(--rd, 0s),
+    transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rd, 0s);
+}
+.slow-reveal[data-revealed="true"] .reveal-late {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sky-title {
+    animation: fade-in 2.4s ease 0.2s both;
+  }
+  .slow-reveal[data-revealed="true"] .scroll-cue svg {
+    animation: cue 2.6s ease-in-out 2s infinite;
+  }
+}
+@keyframes cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slow-reveal .reveal-late {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition: none;
+  }
+  .sky-layer {
+    transform: none;
+  }
+}
+@media print {
+  .slow-reveal .reveal-late {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- map of the family's places ---------- */
+.map-panel {
+  background:
+    radial-gradient(70% 60% at 30% 20%, rgb(93 78 160 / 0.14), transparent 70%),
+    linear-gradient(#08070d, #0c0b14);
+  box-shadow: inset 0 0 0 1px var(--color-hair);
+}
+.map-land {
+  fill: #2a2638;
+  stroke: #8a829f;
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+}
+.map-route {
+  transition:
+    opacity 0.6s ease,
+    stroke-width 0.4s ease;
+}
+.map-route.is-lit {
+  filter: drop-shadow(0 0 4px var(--color-accent-2));
+}
+.map-place {
+  cursor: pointer;
+  outline: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.map-glow {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.map-glow.is-lit,
+.map-place:hover .map-glow,
+.map-place:focus-visible .map-glow {
+  opacity: 0.22;
+}
+.map-button {
+  @apply grid h-9 w-9 cursor-pointer place-items-center rounded-full text-lg leading-none;
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-paper-light) 80%, transparent);
+  box-shadow: inset 0 0 0 1px var(--color-hair);
+  backdrop-filter: blur(8px);
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+}
+.map-button:hover:not(:disabled) {
+  background: var(--color-hair);
+}
+.map-button:disabled {
+  cursor: default;
+  opacity: 0.35;
 }

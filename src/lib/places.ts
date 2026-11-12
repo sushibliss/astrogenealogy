@@ -41,3 +41,56 @@ export function searchPlaces(query: string, limit = 8): Place[] {
   prefix.sort((a, b) => a.key.length - b.key.length || a.key.localeCompare(b.key));
   return [...exact, ...prefix].slice(0, limit).map(({ name, region, country, lat, lon }) => ({ name, region, country, lat, lon }));
 }
+
+let byKey: Map<string, Row[]> | null = null;
+const countryNames = new Map<string, string[]>();
+
+function namesOfCountry(code: string) {
+  let names = countryNames.get(code);
+  if (!names) {
+    names = [code.toLowerCase()];
+    for (const lang of ["en", "es"]) {
+      try {
+        const name = new Intl.DisplayNames(lang, { type: "region" }).of(code);
+        if (name) names.push(normalizePlace(name));
+      } catch {}
+    }
+    countryNames.set(code, names);
+  }
+  return names;
+}
+
+/**
+ * Best single match for a place written as free text ("Girona", "Atlixco, Puebla",
+ * "Valencia (parish not yet identified)"). Towns that share a name are told apart by
+ * the region or country in the text and, failing that, by closeness to `near`.
+ */
+export function locatePlace(text: string, near?: { lat: number; lon: number } | null): Place | null {
+  const parts = text
+    .replace(/\(.*?\)/g, "")
+    .split(",")
+    .map(normalizePlace)
+    .filter(Boolean);
+  if (parts.length === 0) return null;
+  if (!byKey) {
+    byKey = new Map();
+    for (const row of load()) {
+      const list = byKey.get(row.key);
+      if (list) list.push(row);
+      else byKey.set(row.key, [row]);
+    }
+  }
+  let hits = byKey.get(parts[0]) ?? [];
+  if (hits.length === 0) return null;
+  if (parts.length > 1) {
+    const rest = parts.slice(1);
+    const narrowed = hits.filter((r) => rest.some((p) => p === normalizePlace(r.region) || namesOfCountry(r.country).includes(p)));
+    if (narrowed.length > 0) hits = narrowed;
+  }
+  if (near && hits.length > 1) {
+    const dist = (r: Row) => (r.lat - near.lat) ** 2 + ((r.lon - near.lon) * Math.cos((near.lat * Math.PI) / 180)) ** 2;
+    hits = [...hits].sort((a, b) => dist(a) - dist(b));
+  }
+  const { name, region, country, lat, lon } = hits[0];
+  return { name, region, country, lat, lon };
+}

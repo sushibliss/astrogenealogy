@@ -37,7 +37,7 @@ export function PersonEditor({
         <PersonFields value={value} onChange={setValue} />
       </div>
       {error && (
-        <p role="alert" className="mt-4 border border-ink bg-ink px-4 py-2 text-sm text-paper">
+        <p role="alert" className="mt-4 rounded-2xl bg-ink px-4 py-2.5 text-sm text-paper">
           {t("saveError")}
         </p>
       )}

@@ -162,6 +162,28 @@ function ensureDemoDocuments(ownerId: string) {
   }
 }
 
+/** Places the demo family lived, for the map (added once, also to databases seeded before the map existed). */
+const DEMO_RESIDENCES: Record<string, string> = {
+  ff: "Girona (1931–2004)",
+  fm: "Girona (1956–2015)",
+  mf: "Sagunto (1951–1960)\nValencia (1960–1998)",
+  mm: "Valencia (1958–2019)",
+  fff: "Cassà de la Selva (1915–1922)\nGirona (1922–1971)",
+  ffm: "Girona (1925–1989)",
+  mff: "Xàtiva (1930s)",
+};
+
+function ensureDemoResidences(ownerId: string) {
+  const request = db.select().from(schema.requests).where(eq(schema.requests.ownerId, ownerId)).all()[0];
+  if (!request) return;
+  const list = db.select().from(schema.people).where(eq(schema.people.requestId, request.id)).all();
+  if (list.some((p) => p.residences)) return;
+  for (const p of list) {
+    const residences = DEMO_RESIDENCES[p.path];
+    if (residences) db.update(schema.people).set({ residences }).where(eq(schema.people.id, p.id)).run();
+  }
+}
+
 /** Idempotent: creates the admin, the demo users and their sample requests if missing. */
 export function ensureDemoData() {
   const hash = bcrypt.hashSync(DEMO_PASSWORD, 10);
@@ -208,6 +230,7 @@ export function ensureDemoData() {
   }
 
   ensureDemoDocuments(demo.user.id);
+  ensureDemoResidences(demo.user.id);
 
   if (mateo.created) {
     const requestId = randomUUID();
