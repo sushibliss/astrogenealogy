@@ -50,7 +50,7 @@ function Bar({ label, value, max }: { label: string; value: number; max: number 
   return (
     <div className="grid grid-cols-[5.5rem_1fr_1.5rem] items-center gap-3">
       <span className="text-sm font-medium">{label}</span>
-      <span className="h-3 border border-ink bg-paper-light">
+      <span className="h-3 overflow-hidden rounded-full border border-hair bg-paper-light">
         <span className="block h-full bg-accent" style={{ width: `${max ? (value / max) * 100 : 0}%` }} />
       </span>
       <span className="text-right font-mono text-xs">{value}</span>
@@ -95,7 +95,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
   return (
     <article>
       {/* navigation between ancestors */}
-      <div className="no-print border-b border-ink">
+      <div className="no-print border-b border-hair">
         <div className="wrap flex items-center justify-between gap-4 py-2.5 text-sm">
           <Link href={ctx.base} className="link">
             ← {t("backToRequest")}
@@ -121,7 +121,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
           {t("eyebrow")} · {relationLabel(person.path, locale)}
         </p>
         <h1 className="display text-5xl sm:text-7xl">{name}</h1>
-        <dl className="mt-6 grid max-w-3xl grid-cols-1 border-y border-ink sm:grid-cols-3 sm:divide-x sm:divide-ink">
+        <dl className="mt-6 grid max-w-3xl grid-cols-1 border-y border-hair sm:grid-cols-3 sm:divide-x sm:divide-hair">
           {[t("born"), t("hour"), t("place")].map((label, i) => (
             <div key={label} className="border-b border-hair py-3 last:border-b-0 sm:border-b-0 sm:px-4 sm:first:pl-0">
               <dt className="eyebrow">{label}</dt>
@@ -226,7 +226,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
           </section>
 
           {/* readings */}
-          <section className="border-t border-ink">
+          <section className="border-t border-hair">
             <div className="wrap grid gap-x-12 gap-y-8 py-12 lg:grid-cols-[14rem_1fr]">
               <h2 className="display text-3xl">{t("readingTitle")}</h2>
               <div className="grid max-w-[68ch] gap-8 text-[1.0625rem] leading-[1.65]">
@@ -271,13 +271,13 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
           </section>
 
           {/* placements */}
-          <section className="border-t border-ink">
+          <section className="border-t border-hair">
             <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
               <div>
                 <h2 className="display text-3xl">{t("placementsTitle")}</h2>
                 <p className="mt-2 text-sm text-ink-soft">{t("placementsLead")}</p>
               </div>
-              <ul className="border-t border-ink">
+              <ul className="border-t border-hair">
                 {BODIES.map((body) => {
                   const p = byBody[body];
                   const years = YEARS_PER_SIGN[body];
@@ -324,7 +324,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
           </section>
 
           {/* balance */}
-          <section className="border-t border-ink">
+          <section className="border-t border-hair">
             <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
               <h2 className="display text-3xl">{t("balanceTitle")}</h2>
               <div className="grid gap-10 md:grid-cols-2">
@@ -353,7 +353,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
           </section>
 
           {/* aspects */}
-          <section className="border-t border-ink">
+          <section className="border-t border-hair">
             <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
               <div>
                 <h2 className="display text-3xl">{t("aspectsTitle")}</h2>
@@ -362,7 +362,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
               {chart.aspects.length === 0 ? (
                 <p className="text-ink-soft">{t("noAspects")}</p>
               ) : (
-                <ul className="border-t border-ink">
+                <ul className="border-t border-hair">
                   {chart.aspects.slice(0, 10).map((a) => (
                     <li
                       key={`${a.a}-${a.b}`}
@@ -384,7 +384,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
 
           {/* synastry */}
           {comparable.length > 0 && (
-            <section className="no-print border-t border-ink">
+            <section className="no-print border-t border-hair">
               <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
                 <div>
                   <h2 className="display text-3xl">{t("compareTitle")}</h2>
@@ -406,7 +406,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
       )}
 
       {sources.length > 0 && (
-        <section className="border-t border-ink">
+        <section className="border-t border-hair">
           <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
             <div>
               <h2 className="display text-3xl">{tDocs("sectionTitle")}</h2>
@@ -419,9 +419,9 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
                     href={documentHref(doc, ctx.token)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="fade-colors flex items-center gap-3 border border-ink bg-paper-light px-4 py-3 hover:border-accent hover:text-accent"
+                    className="fade-colors flex items-center gap-3 rounded-2xl border border-hair bg-paper-light px-4 py-3 hover:border-accent hover:text-accent"
                   >
-                    <span className="shrink-0 border border-current px-1 font-mono text-[0.625rem] uppercase tracking-[0.1em]">
+                    <span className="shrink-0 rounded-full border border-current px-2 font-mono text-[0.625rem] uppercase tracking-[0.1em]">
                       {doc.kind === "file" ? tTree("pdf") : tTree("link")}
                     </span>
                     <span className="min-w-0 flex-1">{doc.title}</span>
@@ -435,7 +435,7 @@ export async function BirthReport({ person, locale, ctx }: { person: Person; loc
       )}
 
       {/* lineage navigator */}
-      <section className="no-print border-t border-ink bg-paper-deep">
+      <section className="no-print border-t border-hair bg-paper-deep">
         <div className="wrap py-10">
           <h2 className="eyebrow mb-4">{t("lineage")}</h2>
           <Tree

@@ -1,0 +1,1 @@
+ALTER TABLE `people` ADD `residences` text DEFAULT '' NOT NULL;

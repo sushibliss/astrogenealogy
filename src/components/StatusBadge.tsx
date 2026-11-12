@@ -6,7 +6,7 @@ export async function StatusBadge({ status }: { status: RequestStatus }) {
   const filled = status === "published";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 border px-2 py-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] ${
         filled ? "border-accent bg-accent text-paper" : "border-ink"
       }`}
     >

@@ -41,7 +41,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         {mode === "register" && <p className="mt-1.5 text-xs text-ink-soft">{t("passwordHint")}</p>}
       </div>
       {state?.error && (
-        <p role="alert" className="border border-ink bg-ink px-4 py-2 text-sm text-paper">
+        <p role="alert" className="rounded-2xl bg-ink px-4 py-2.5 text-sm text-paper">
           {t(`error_${state.error}`)}
         </p>
       )}

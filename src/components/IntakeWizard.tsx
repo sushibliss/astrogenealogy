@@ -48,9 +48,9 @@ export function IntakeWizard({
 
   return (
     <div>
-      <ol className="mb-8 grid grid-cols-4 border border-ink text-center font-mono text-[0.6875rem] uppercase tracking-[0.1em]">
+      <ol className="mb-8 grid grid-cols-4 overflow-hidden rounded-full border border-ink-faint text-center font-mono text-[0.6875rem] uppercase tracking-[0.1em]">
         {stepTitles.map((title, i) => (
-          <li key={i} className="not-first:border-l border-ink">
+          <li key={i} className="not-first:border-l border-hair">
             <button
               type="button"
               onClick={() => go(i)}
@@ -119,7 +119,7 @@ export function IntakeWizard({
       )}
 
       {error && (
-        <p role="alert" className="mt-5 border border-ink bg-ink px-4 py-2 text-sm text-paper">
+        <p role="alert" className="mt-5 rounded-2xl bg-ink px-4 py-2.5 text-sm text-paper">
           {t(`error_${error}`)}
         </p>
       )}

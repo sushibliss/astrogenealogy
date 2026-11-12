@@ -40,7 +40,7 @@ export default async function AdminQueue({ params }: { params: Promise<{ locale:
             <h2 className="eyebrow mb-2">
               {tStatus(status)} · {group.length}
             </h2>
-            <ul className="border-t border-ink">
+            <ul className="border-t border-hair">
               {group.map(({ request, owner }) => {
                 const self = db
                   .select()
@@ -49,7 +49,7 @@ export default async function AdminQueue({ params }: { params: Promise<{ locale:
                   .all()
                   .find((p) => p.path === "");
                 return (
-                  <li key={request.id} className="border-b border-ink">
+                  <li key={request.id} className="border-b border-hair">
                     <Link
                       href={`/admin/requests/${request.id}`}
                       className="group grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-center"

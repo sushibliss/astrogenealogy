@@ -30,7 +30,7 @@ export async function SynastryView({ a, b, locale, base }: { a: Person; b: Perso
 
   return (
     <article>
-      <div className="no-print border-b border-ink">
+      <div className="no-print border-b border-hair">
         <div className="wrap flex flex-wrap gap-x-6 gap-y-1 py-2.5 text-sm">
           <Link href={`${base}/people/${a.id}`} className="link">
             ← {nameA}
@@ -55,7 +55,7 @@ export async function SynastryView({ a, b, locale, base }: { a: Person; b: Perso
           <p className="eyebrow mb-2">{t("toneLabel")}</p>
           <p className="display text-3xl">{t(`tone_${syn.tone}`)}</p>
           <div className="mt-5">
-            <div className="flex h-4 border border-ink bg-paper-light" role="img" aria-label={t("easeBar", { pct: easePct })}>
+            <div className="flex h-4 overflow-hidden rounded-full border border-hair bg-paper-light" role="img" aria-label={t("easeBar", { pct: easePct })}>
               <span className="block h-full bg-accent" style={{ width: `${easePct}%` }} />
             </div>
             <div className="mt-1.5 flex justify-between font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ink-soft">
@@ -100,7 +100,7 @@ export async function SynastryView({ a, b, locale, base }: { a: Person; b: Perso
         </div>
       </section>
 
-      <section className="border-t border-ink">
+      <section className="border-t border-hair">
         <div className="wrap grid gap-x-12 gap-y-6 py-12 lg:grid-cols-[14rem_1fr]">
           <div>
             <h2 className="display text-3xl">{t("contactsTitle")}</h2>
@@ -109,7 +109,7 @@ export async function SynastryView({ a, b, locale, base }: { a: Person; b: Perso
           {syn.aspects.length === 0 ? (
             <p className="text-ink-soft">{t("none")}</p>
           ) : (
-            <ul className="border-t border-ink">
+            <ul className="border-t border-hair">
               {syn.aspects.slice(0, 12).map((x, i) => (
                 <li
                   key={i}

@@ -38,17 +38,17 @@ export function DocumentManager({ requestId, personId, documents }: { requestId:
   };
 
   return (
-    <section className="mt-12 border-t border-ink pt-8">
+    <section className="mt-12 border-t border-hair pt-8">
       <h2 className="display text-3xl">{t("title")}</h2>
       <p className="mt-2 mb-5 max-w-2xl text-sm text-ink-soft">{t("lead")}</p>
 
       {documents.length === 0 ? (
         <p className="mb-6 text-sm text-ink-soft">{t("none")}</p>
       ) : (
-        <ul className="mb-6 border-t border-ink">
+        <ul className="mb-6 border-t border-hair">
           {documents.map((doc) => (
             <li key={doc.id} className="flex flex-wrap items-center gap-3 border-b border-hair py-2.5 text-sm">
-              <span className="border border-current px-1 font-mono text-[0.5625rem] uppercase tracking-[0.1em]">
+              <span className="rounded-full border border-current px-2 font-mono text-[0.5625rem] uppercase tracking-[0.1em]">
                 {doc.kind === "file" ? "PDF" : "URL"}
               </span>
               <a href={doc.href} target="_blank" rel="noopener noreferrer" className="link min-w-0 flex-1">
@@ -75,7 +75,7 @@ export function DocumentManager({ requestId, personId, documents }: { requestId:
             <label className="label" htmlFor="doc-file">
               {t("file")}
             </label>
-            <input id="doc-file" name="file" type="file" accept="application/pdf,.pdf" className="field text-sm file:mr-3 file:border-0 file:bg-ink file:px-3 file:py-1 file:text-paper" />
+            <input id="doc-file" name="file" type="file" accept="application/pdf,.pdf" className="field text-sm file:mr-3 file:rounded-full file:border-0 file:bg-ink file:px-3 file:py-1 file:text-paper" />
           </div>
           <span className="eyebrow pb-3 text-center">{t("or")}</span>
           <div>
@@ -86,7 +86,7 @@ export function DocumentManager({ requestId, personId, documents }: { requestId:
           </div>
         </div>
         {error && (
-          <p role="alert" className="border border-ink bg-ink px-4 py-2 text-sm text-paper">
+          <p role="alert" className="rounded-2xl bg-ink px-4 py-2.5 text-sm text-paper">
             {t(`error_${["title", "size", "type", "url", "empty", "forbidden"].includes(error) ? error : "failed"}`)}
           </p>
         )}

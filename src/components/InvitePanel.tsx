@@ -27,7 +27,7 @@ export async function InvitePanel({ requestId, locale, published }: { requestId:
         <button className="btn">{t("create")}</button>
       </form>
       {invites.length > 0 && (
-        <ul className="mt-6 max-w-3xl border-t border-ink">
+        <ul className="mt-6 max-w-3xl border-t border-hair">
           {invites.map((inv) => (
             <li key={inv.id} className="grid gap-x-4 gap-y-2 border-b border-hair py-3 sm:grid-cols-[10rem_1fr_auto] sm:items-center">
               <span className="truncate font-semibold">{inv.label || t("unnamed")}</span>

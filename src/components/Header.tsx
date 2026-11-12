@@ -4,12 +4,13 @@ import { currentUser, isAdmin } from "@/lib/session";
 import { logoutAction } from "@/app/actions";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { ThemeToggle } from "./ThemeToggle";
+import { Chime } from "./Chime";
 
 export async function Header({ locale }: { locale: string }) {
   const t = await getTranslations("nav");
   const user = await currentUser();
   return (
-    <header className="no-print border-b border-ink">
+    <header className="no-print border-b border-hair">
       <div className="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
         <Link href={user ? "/dashboard" : "/"} className="display text-2xl" aria-label="Origen">
           Origen
@@ -40,6 +41,7 @@ export async function Header({ locale }: { locale: string }) {
               </Link>
             </>
           )}
+          <Chime labelOn={t("soundOn")} labelOff={t("soundOff")} />
           <ThemeToggle label={t("theme")} />
           <LocaleSwitch />
         </nav>
