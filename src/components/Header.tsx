@@ -13,8 +13,8 @@ export async function Header({ locale }: { locale: string }) {
   const user = await currentUser();
   return (
     <TopBar label={t("menu")}>
-      <div className="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
-        <Link href={user ? "/dashboard" : "/"} className="display text-2xl" aria-label={BRAND}>
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-2.5">
+        <Link href={user ? "/dashboard" : "/"} className="display text-xl" aria-label={BRAND}>
           {BRAND}
         </Link>
         <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">

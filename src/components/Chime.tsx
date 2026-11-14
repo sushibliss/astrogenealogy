@@ -13,14 +13,14 @@ function makeVoice(): Voice | null {
   if (!Ctor) return null;
   const ctx = new Ctor();
   const out = ctx.createGain();
-  out.gain.value = 0.36;
+  out.gain.value = 0.22;
   // a short, quiet echo gives the note some air without a reverb
   const echo = ctx.createDelay(1);
   echo.delayTime.value = 0.27;
   const feedback = ctx.createGain();
   feedback.gain.value = 0.32;
   const wet = ctx.createGain();
-  wet.gain.value = 0.3;
+  wet.gain.value = 0.22;
   out.connect(ctx.destination);
   out.connect(echo);
   echo.connect(feedback);
@@ -36,14 +36,13 @@ function ring({ ctx, out }: Voice, freq: number) {
   for (const [ratio, level, length] of [
     [1, 0.036, 1.5],
     [2.01, 0.008, 0.7],
-    [3.02, 0.005, 0.35],
-  ]) {
+      ]) {
     const osc = ctx.createOscillator();
     osc.type = "sine";
     osc.frequency.value = freq * ratio;
     const gain = ctx.createGain();
     gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(level, t + 0.012);
+    gain.gain.exponentialRampToValueAtTime(level, t + 0.03);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + length);
     osc.connect(gain);
     gain.connect(out);
@@ -53,7 +52,7 @@ function ring({ ctx, out }: Voice, freq: number) {
 }
 
 /**
- * Plays a quiet chime whenever the mouse comes to rest on a name (any element
+ * Plays a very quiet chime when the visitor moves the mouse onto a name (any element
  * marked `data-chime`). Each name always rings the same note. Browsers only
  * allow sound after the visitor has clicked or pressed a key on the page, so
  * the first chimes are heard from then on. The button mutes it for good.
@@ -82,26 +81,35 @@ export function Chime({ labelOn, labelOff }: { labelOn: string; labelOff: string
       voice.current ??= makeVoice();
       if (voice.current?.ctx.state === "suspended") void voice.current.ctx.resume();
     };
-    const over = (e: PointerEvent) => {
+    // Only a pointer the visitor is actually moving counts. Things that appear or
+    // animate underneath a resting pointer (the tree drawing itself as the page
+    // loads, a card sliding in) must stay silent.
+    let lastX = -1;
+    let lastY = -1;
+    const move = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
+      const travelled = lastX >= 0 && (Math.abs(e.clientX - lastX) > 1 || Math.abs(e.clientY - lastY) > 1);
+      lastX = e.clientX;
+      lastY = e.clientY;
       const el = (e.target as Element | null)?.closest?.("[data-chime]") ?? null;
       if (el === current) return;
+      if (!travelled) return;
       current = el;
       const v = voice.current;
       if (!el || !enabledRef.current || !v || v.ctx.state !== "running") return;
       const now = performance.now();
-      if (now - last < 90) return;
+      if (now - last < 140) return;
       last = now;
       const name = el.getAttribute("data-chime") ?? "";
       let hash = 0;
       for (const ch of name) hash = (hash * 31 + ch.codePointAt(0)!) >>> 0;
       ring(v, NOTES[hash % NOTES.length]);
     };
-    document.addEventListener("pointerover", over);
+    document.addEventListener("pointermove", move, { passive: true });
     document.addEventListener("pointerdown", unlock);
     document.addEventListener("keydown", unlock);
     return () => {
-      document.removeEventListener("pointerover", over);
+      document.removeEventListener("pointermove", move);
       document.removeEventListener("pointerdown", unlock);
       document.removeEventListener("keydown", unlock);
     };
@@ -117,7 +125,7 @@ export function Chime({ labelOn, labelOff }: { labelOn: string; labelOff: string
     if (next) {
       voice.current ??= makeVoice();
       const v = voice.current;
-      if (v) void v.ctx.resume().then(() => ring(v, NOTES[3]));
+      if (v) void v.ctx.resume();
     }
   };
 

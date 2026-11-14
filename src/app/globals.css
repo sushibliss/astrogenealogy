@@ -823,15 +823,18 @@ body {
   height: 14px;
 }
 .topbar {
+  /* a compact floating pill, not a band across the whole screen */
   position: absolute;
-  inset: 0 0 auto 0;
-  transform: translateY(-104%);
+  top: 0.625rem;
+  left: 50%;
+  width: min(44rem, calc(100% - 1.25rem));
+  transform: translate(-50%, -130%);
   opacity: 0;
   visibility: hidden;
   background: color-mix(in srgb, var(--color-paper) 84%, transparent);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--color-hair);
-  border-radius: 0 0 1.75rem 1.75rem;
+  border: 1px solid var(--color-hair);
+  border-radius: 1.75rem;
   box-shadow: 0 24px 50px -30px rgb(0 0 0 / 0.55);
   transition:
     transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -841,7 +844,7 @@ body {
 .topbar-zone:hover .topbar,
 .topbar-zone:focus-within .topbar,
 .topbar-zone[data-open="true"] .topbar {
-  transform: none;
+  transform: translate(-50%, 0);
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
