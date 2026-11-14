@@ -31,46 +31,46 @@
 
 /* Dark theme: chosen explicitly, or by the system when no choice was made. */
 :root[data-theme="dark"] {
-  --color-paper: #15120f;
-  --color-paper-deep: #1d1915;
-  --color-paper-light: #262019;
-  --color-ink: #ebe2cf;
-  --color-ink-soft: #a89f8c;
-  --color-ink-faint: #766d5e;
-  --color-line: #ebe2cf;
-  --color-hair: #3d352a;
-  /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
-  --color-accent: #e2623e;
-  --color-accent-2: #d9a441;
-  --color-accent-3: #7fb5a2;
-  --band-bg: #1d1915;
-  --band-fg: #ebe2cf;
-  --band-star: #d8c79a;
-  --color-star: #d8c79a;
-  --moon-shadow: #2e2720;
-  --moon-lit: #ebe2cf;
+  --color-paper: #0c0b13;
+  --color-paper-deep: #13111b;
+  --color-paper-light: #1b1825;
+  --color-ink: #efe6d2;
+  --color-ink-soft: #b3aa98;
+  --color-ink-faint: #7f776a;
+  --color-line: #efe6d2;
+  --color-hair: #373145;
+  /* warm lights on a cool night: ember, gold and verdigris over indigo-black */
+  --color-accent: #e9704a;
+  --color-accent-2: #e0b052;
+  --color-accent-3: #86c2ad;
+  --band-bg: #13111b;
+  --band-fg: #efe6d2;
+  --band-star: #e3d3a6;
+  --color-star: #e3d3a6;
+  --moon-shadow: #2a2638;
+  --moon-lit: #efe6d2;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #15120f;
-    --color-paper-deep: #1d1915;
-    --color-paper-light: #262019;
-    --color-ink: #ebe2cf;
-    --color-ink-soft: #a89f8c;
-    --color-ink-faint: #766d5e;
-    --color-line: #ebe2cf;
-    --color-hair: #3d352a;
-    /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
-    --color-accent: #e2623e;
-    --color-accent-2: #d9a441;
-    --color-accent-3: #7fb5a2;
-    --band-bg: #1d1915;
-    --band-fg: #ebe2cf;
-    --band-star: #d8c79a;
-  --color-star: #d8c79a;
-    --moon-shadow: #2e2720;
-    --moon-lit: #ebe2cf;
+    --color-paper: #0c0b13;
+    --color-paper-deep: #13111b;
+    --color-paper-light: #1b1825;
+    --color-ink: #efe6d2;
+    --color-ink-soft: #b3aa98;
+    --color-ink-faint: #7f776a;
+    --color-line: #efe6d2;
+    --color-hair: #373145;
+    /* warm lights on a cool night: ember, gold and verdigris over indigo-black */
+    --color-accent: #e9704a;
+    --color-accent-2: #e0b052;
+    --color-accent-3: #86c2ad;
+    --band-bg: #13111b;
+    --band-fg: #efe6d2;
+    --band-star: #e3d3a6;
+    --color-star: #e3d3a6;
+    --moon-shadow: #2a2638;
+    --moon-lit: #efe6d2;
     color-scheme: dark;
   }
 }
@@ -104,6 +104,10 @@ body {
 @layer components {
   .wrap {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-8;
+  }
+  /* for pages that fill the screen: findings, map, reports */
+  .wrap-wide {
+    @apply mx-auto w-full max-w-[94rem] px-4 sm:px-8;
   }
   /* small mono caption used for labels, statuses and data */
   .eyebrow {
@@ -802,4 +806,178 @@ body {
 .map-button:disabled {
   cursor: default;
   opacity: 0.35;
+}
+
+/* ---------- top bar: out of sight until the pointer goes looking for it ---------- */
+.topbar-zone {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 0;
+}
+.topbar-zone::before {
+  /* a thin strip along the top edge that calls the bar down */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 14px;
+}
+.topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  transform: translateY(-104%);
+  opacity: 0;
+  visibility: hidden;
+  background: color-mix(in srgb, var(--color-paper) 84%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-hair);
+  border-radius: 0 0 1.75rem 1.75rem;
+  box-shadow: 0 24px 50px -30px rgb(0 0 0 / 0.55);
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.45s ease,
+    visibility 0s linear 0.55s;
+}
+.topbar-zone:hover .topbar,
+.topbar-zone:focus-within .topbar,
+.topbar-zone[data-open="true"] .topbar {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.topbar-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 1.375rem;
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: var(--color-ink-soft);
+  background: color-mix(in srgb, var(--color-paper-light) 72%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-hair);
+  border-top: 0;
+  border-radius: 0 0 999px 999px;
+  opacity: 0.7;
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.topbar-zone:hover .topbar-handle,
+.topbar-zone:focus-within .topbar-handle,
+.topbar-zone[data-open="true"] .topbar-handle {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100%);
+}
+@media print {
+  .topbar-zone {
+    display: none;
+  }
+}
+
+/* ---------- findings: figures beside the text ---------- */
+.stat {
+  @apply rounded-2xl bg-paper-deep px-4 py-3;
+}
+.meter {
+  @apply h-1.5 overflow-hidden rounded-full bg-paper-deep;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+.section-nav a {
+  @apply flex items-center gap-2.5 rounded-full px-3 py-1.5 text-sm text-ink-soft;
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease;
+}
+.section-nav a:hover {
+  @apply bg-paper-deep text-ink;
+}
+
+/* ---------- front page: the sky right now ---------- */
+.live-sky {
+  background: transparent;
+  box-shadow:
+    0 0 0 1px var(--color-hair),
+    0 0 70px -6px rgb(93 78 160 / 0.55),
+    0 0 140px -20px rgb(233 112 74 / 0.35);
+}
+.live-sign,
+.live-fade {
+  transition:
+    opacity 0.9s ease,
+    font-size 0.6s ease,
+    r 0.6s ease;
+}
+.live-aspect {
+  transition:
+    opacity 0.8s ease,
+    stroke-width 0.6s ease;
+}
+.live-aspect.is-lit {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.live-planet {
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+.live-core {
+  transition: opacity 1s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .live-orbit {
+    transform-origin: 320px 320px;
+    animation: orbit-in 2.6s cubic-bezier(0.2, 0.7, 0.15, 1) both;
+  }
+  .live-aspect {
+    stroke-dasharray: 1;
+    animation: draw-in 1.8s ease both;
+  }
+  .live-pulse {
+    animation: pulse-out 2.8s ease-out infinite;
+  }
+  .live-readout {
+    animation: readout-in 0.9s ease both;
+  }
+  .live-core {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: breathe 7s ease-in-out infinite;
+  }
+}
+@keyframes orbit-in {
+  from {
+    opacity: 0;
+    transform: rotate(-150deg);
+  }
+}
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pulse-out {
+  from {
+    opacity: 0.9;
+    r: 19px;
+  }
+  to {
+    opacity: 0;
+    r: 44px;
+  }
+}
+@keyframes readout-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }

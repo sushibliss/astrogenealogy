@@ -89,7 +89,7 @@ export function PlacesMapView({ map, width: W, height: H, labels }: { map: Famil
   );
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_19rem]">
+    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
       <div className="min-w-0">
         <div className="night map-panel relative overflow-hidden rounded-[1.75rem]">
           <svg
@@ -234,7 +234,7 @@ export function PlacesMapView({ map, width: W, height: H, labels }: { map: Famil
         </p>
       </div>
 
-      <ul className="grid gap-1.5 lg:max-h-[40rem] lg:overflow-y-auto lg:pr-1">
+      <ul className="grid gap-1.5 lg:max-h-[46rem] lg:overflow-y-auto lg:pr-1">
         {map.people.map((p) => {
           const here = place ? p.stops.some((s) => s.placeId === place.id && on[s.kind]) : false;
           const dim = (place && !here) || (person && person.id !== p.id);

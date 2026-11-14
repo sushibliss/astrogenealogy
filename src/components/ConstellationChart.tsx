@@ -141,7 +141,7 @@ export function ConstellationChart({
             role="group"
             aria-label={labels.title}
             className="mx-auto block h-auto w-full"
-            style={{ minWidth: Math.min(W, 900), maxHeight: "max(28rem, calc(100svh - 8.5rem))" }}
+            style={{ minWidth: Math.min(W, 900), maxHeight: "max(28rem, calc(100svh - 5rem))" }}
             onMouseLeave={() => setHoverId(null)}
           >
             <defs>

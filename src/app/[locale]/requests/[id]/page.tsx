@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import { InvitePanel } from "@/components/InvitePanel";
-import { Markdown } from "@/components/Markdown";
+import { Findings } from "@/components/Findings";
 import { ReportIndex } from "@/components/ReportIndex";
 import { StatusBadge } from "@/components/StatusBadge";
 import { FamilyConstellation } from "@/components/FamilyConstellation";
@@ -33,85 +33,87 @@ export default async function RequestPage({ params }: { params: Promise<{ locale
 
   const map = await PlacesMap({ people, locale });
 
-  const heading = (
-    <header className="wrap pt-12 pb-10">
-        <div className="mb-4 flex flex-wrap items-center gap-3">
-          <StatusBadge status={request.status} />
-          {request.submittedAt && (
-            <span className="eyebrow">
-              {t("submittedOn")} {fmt.format(request.submittedAt)}
-            </span>
-          )}
-          {access.isAdmin && (
-            <Link href={`/admin/requests/${id}`} className="btn-ghost btn-sm no-print">
-              {t("openAdmin")}
-            </Link>
-          )}
-        </div>
-        <h1 className="display max-w-4xl text-4xl sm:text-6xl">
-          {published ? publication!.title : t("titleFor", { name: (self && fullName(self)) || "—" })}
-        </h1>
-        {published ? (
-          <p className="mt-4 text-ink-soft">{t("publishedOn", { date: fmt.format(publication!.publishedAt!) })}</p>
-        ) : (
-          <p className="notice mt-6 max-w-2xl">{t(`explain_${request.status}`)}</p>
-        )}
-      </header>
+  const status = (
+    <div className="mb-4 flex flex-wrap items-center gap-3">
+      <StatusBadge status={request.status} />
+      {request.submittedAt && (
+        <span className="eyebrow">
+          {t("submittedOn")} {fmt.format(request.submittedAt)}
+        </span>
+      )}
+      {access.isAdmin && (
+        <Link href={`/admin/requests/${id}`} className="btn-ghost btn-sm no-print">
+          {t("openAdmin")}
+        </Link>
+      )}
+    </div>
   );
 
   return (
     <SlowReveal after={published ? unveilSeconds(people.map((p) => p.path)) : 0}>
       {/* until the findings are out, the status comes first; afterwards the sky does */}
-      {!published && heading}
+      {!published && (
+        <header className="wrap-wide pt-14 pb-10">
+          {status}
+          <h1 className="display max-w-4xl text-4xl sm:text-6xl">{t("titleFor", { name: (self && fullName(self)) || "—" })}</h1>
+          <p className="notice mt-6 max-w-2xl">{t(`explain_${request.status}`)}</p>
+        </header>
+      )}
       <SkyHero cue={published ? { label: t("readOn"), href: "#findings" } : undefined}>
         <FamilyConstellation people={people} locale={locale} base={base} />
       </SkyHero>
 
       {published && (
-        <section id="findings" className="reveal-late scroll-mt-6" style={later(0.3)}>
-          {heading}
-          <div className="wrap grid gap-x-12 gap-y-6 pt-4 pb-16 lg:grid-cols-[14rem_1fr]">
-            <h2 className="display text-3xl">{t("findings")}</h2>
-            <Markdown>{publication!.body}</Markdown>
-          </div>
-        </section>
+        <Findings
+          style={later(0.3)}
+          heading={
+            <header>
+              {status}
+              <h1 className="display text-4xl sm:text-5xl xl:text-[2rem] xl:leading-[1.08] 2xl:text-4xl">{publication!.title}</h1>
+              <p className="mt-4 text-sm text-ink-soft">{t("publishedOn", { date: fmt.format(publication!.publishedAt!) })}</p>
+            </header>
+          }
+          body={publication!.body}
+          people={people}
+          locale={locale}
+          sections={[...(map ? [{ href: "#places", label: t("map") }] : []), { href: "#reports", label: t("reports") }, { href: "#share", label: t("share") }]}
+        />
       )}
 
       {map && (
-        <section className="reveal-late" style={later(0.6)}>
-          <div className={`wrap pb-16 ${published ? "" : "pt-16"}`}>
-            <h2 className="display text-3xl">{t("map")}</h2>
+        <section id="places" className="reveal-late scroll-mt-10" style={later(0.6)}>
+          <div className={`wrap-wide pb-20 ${published ? "" : "pt-16"}`}>
+            <h2 className="display text-4xl">{t("map")}</h2>
             <p className="mt-2 mb-6 max-w-2xl text-sm text-ink-soft">{t("mapLead")}</p>
             {map}
           </div>
         </section>
       )}
 
-      <section className="reveal-late" style={later(0.9)}>
-        <div className="wrap">
+      <section id="reports" className="reveal-late scroll-mt-10" style={later(0.9)}>
+        <div className="wrap-wide">
           <div className="rounded-[2rem] bg-paper-deep px-5 py-10 sm:px-10">
-            <h2 className="display text-3xl">{t("reports")}</h2>
+            <h2 className="display text-4xl">{t("reports")}</h2>
             <p className="mt-2 mb-6 max-w-2xl text-sm text-ink-soft">{t("reportsLead")}</p>
             <ReportIndex people={people} locale={locale} base={base} />
           </div>
         </div>
       </section>
 
-      <section className="reveal-late no-print" style={later(1.1)}>
-        <div className="wrap pt-14 pb-4">
-          <h2 className="display mb-3 text-3xl">{t("share")}</h2>
-          <InvitePanel requestId={id} locale={locale} published={published} />
+      <section id="share" className="reveal-late no-print scroll-mt-10" style={later(1.1)}>
+        <div className={`wrap-wide grid gap-6 pt-6 ${request.focusNotes ? "lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]" : ""}`}>
+          <div className="card p-6 sm:p-8">
+            <h2 className="display mb-3 text-3xl">{t("share")}</h2>
+            <InvitePanel requestId={id} locale={locale} published={published} />
+          </div>
+          {request.focusNotes && (
+            <div className="card self-start p-6 sm:p-8">
+              <h2 className="eyebrow mb-3">{t("focus")}</h2>
+              <p className="display text-xl leading-snug whitespace-pre-wrap">{request.focusNotes}</p>
+            </div>
+          )}
         </div>
       </section>
-
-      {request.focusNotes && (
-        <section className="reveal-late" style={later(1.2)}>
-          <div className="wrap py-10">
-            <h2 className="eyebrow mb-2">{t("focus")}</h2>
-            <p className="max-w-2xl whitespace-pre-wrap">{request.focusNotes}</p>
-          </div>
-        </section>
-      )}
     </SlowReveal>
   );
 }

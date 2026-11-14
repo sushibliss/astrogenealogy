@@ -24,7 +24,7 @@ export function SkyHero({
           <Starfield count={40} seed={41} shooting />
         </div>
       </SkyDrift>
-      <div className="relative mx-auto flex min-h-[calc(100svh-3.5rem)] w-full max-w-[112rem] flex-col justify-center px-3 pt-5 pb-6 sm:px-6">
+      <div className="relative mx-auto flex min-h-svh w-full max-w-[112rem] flex-col justify-center px-3 pt-5 pb-6 sm:px-6">
         {children}
         {cue && (
           <a href={cue.href} className="reveal-late scroll-cue mx-auto mt-5 flex flex-col items-center gap-1" style={{ "--rd": "0.9s" } as React.CSSProperties}>

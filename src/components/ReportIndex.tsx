@@ -11,7 +11,7 @@ export async function ReportIndex({ people, locale, base }: { people: Person[]; 
   const t = await getTranslations("reports");
   const lang = locale === "es" ? "es" : "en";
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       {people.map((p) => {
         const chart = computeChart(birthDataOf(p));
         const sun = chart?.placements[0];

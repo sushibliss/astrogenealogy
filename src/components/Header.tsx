@@ -5,15 +5,17 @@ import { logoutAction } from "@/app/actions";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { ThemeToggle } from "./ThemeToggle";
 import { Chime } from "./Chime";
+import { TopBar } from "./TopBar";
+import { BRAND } from "@/lib/brand";
 
 export async function Header({ locale }: { locale: string }) {
   const t = await getTranslations("nav");
   const user = await currentUser();
   return (
-    <header className="no-print border-b border-hair">
+    <TopBar label={t("menu")}>
       <div className="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
-        <Link href={user ? "/dashboard" : "/"} className="display text-2xl" aria-label="Origen">
-          Origen
+        <Link href={user ? "/dashboard" : "/"} className="display text-2xl" aria-label={BRAND}>
+          {BRAND}
         </Link>
         <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
           {user ? (
@@ -46,6 +48,6 @@ export async function Header({ locale }: { locale: string }) {
           <LocaleSwitch />
         </nav>
       </div>
-    </header>
+    </TopBar>
   );
 }

@@ -10,6 +10,7 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "@fontsource/noto-sans-symbols/symbols-400.css";
 import "../globals.css";
+import { BRAND } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    title: { default: t("title"), template: "%s · Origen" },
+    title: { default: t("title"), template: `%s · ${BRAND}` },
     description: t("description"),
     robots: { index: false, follow: false },
   };
