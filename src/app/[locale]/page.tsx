@@ -4,10 +4,12 @@ import { DemoLogin } from "@/components/DemoLogin";
 import { demoEnabled } from "@/lib/demo";
 import { MoonPhase, phaseIndex } from "@/components/MoonPhase";
 import { Starfield } from "@/components/Starfield";
-import { Wheel } from "@/components/Wheel";
+import { LiveSky } from "@/components/LiveSky";
+import { spread } from "@/components/Wheel";
 import { SIGNS, computeChart } from "@/lib/astro/chart";
 import { BODY_GLYPH, SIGN_GLYPH } from "@/lib/astro/glyphs";
 import { BODY_NAMES, SIGN_NAMES } from "@/lib/astro/readings";
+import { BRAND } from "@/lib/brand";
 import { currentUser } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +27,10 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
   const iso = now.toISOString();
   const sky = computeChart({ date: iso.slice(0, 10), time: iso.slice(11, 16), tz: "UTC" })!;
   const [sun, moon] = sky.placements;
+  const shown = spread(
+    sky.placements.map((p) => p.lon),
+    13,
+  );
   const elongation = moon.lon - sun.lon;
   const weekday = new Intl.DateTimeFormat(locale, { weekday: "long", timeZone: "UTC" }).format(now);
   const day = new Intl.DateTimeFormat(locale, { day: "numeric", timeZone: "UTC" }).format(now);
@@ -34,7 +40,7 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
     <>
       <section className="relative overflow-hidden">
         <Starfield count={64} shooting />
-        <div className="wrap relative grid items-center gap-x-10 gap-y-10 pt-12 pb-16 lg:min-h-[calc(100dvh-8rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+        <div className="wrap relative grid items-center gap-x-10 gap-y-10 pt-16 pb-16 lg:min-h-[calc(100dvh-4rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
           <div>
             <p className="eyebrow rise-in flex items-center gap-2">
               <svg viewBox="0 0 24 24" width="11" height="11" className="text-accent" aria-hidden>
@@ -43,10 +49,10 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
               {t("flourish")}
             </p>
             <p
-              className="display rise-in mt-3 text-[clamp(5rem,14vw,11rem)] leading-[0.85]"
+              className="display rise-in mt-3 text-[clamp(3.5rem,9.6vw,7.5rem)] leading-[0.9]"
               style={{ "--delay": "0.1s" } as React.CSSProperties}
             >
-              Origen
+              {BRAND}
             </p>
             <h1
               className="display rise-in mt-6 max-w-xl text-4xl leading-[1.08] text-accent italic sm:text-5xl"
@@ -107,10 +113,30 @@ export default async function Landing({ params }: { params: Promise<{ locale: st
                   return <circle key={i} cx={100 + 92.5 * Math.cos(a)} cy={100 + 92.5 * Math.sin(a)} r={i % 3 === 0 ? 0.9 : 0.45} fill="currentColor" />;
                 })}
               </svg>
-              <div className="relative rounded-full bg-paper">
-                <Wheel chart={sky} title={t("skyTitle")} className="w-full" animated />
-              </div>
+              <LiveSky
+                title={t("skyTitle")}
+                inWord={t("skyIn")}
+                signs={SIGNS.map((key) => ({ glyph: SIGN_GLYPH[key], name: SIGN_NAMES[key][lang] }))}
+                bodies={sky.placements.map((p, i) => ({
+                  key: p.body,
+                  name: BODY_NAMES[p.body][lang],
+                  glyph: BODY_GLYPH[p.body],
+                  lon: p.lon,
+                  shown: shown[i],
+                  sign: p.sign,
+                  signName: SIGN_NAMES[SIGNS[p.sign]][lang],
+                  deg: p.deg,
+                  tone: i < 2 ? "var(--color-accent-2)" : i < 5 ? "var(--color-accent)" : "var(--color-accent-3)",
+                }))}
+                aspects={sky.aspects
+                  .filter((a) => a.type !== "conjunction")
+                  .map((a) => ({ a: a.a, b: a.b, soft: a.type === "trine" || a.type === "sextile" }))}
+              />
             </div>
+
+            <p className="eyebrow rise-in mt-1 mb-3 text-center" style={{ "--delay": "1.2s" } as React.CSSProperties}>
+              {t("skyHint")}
+            </p>
 
             {/* today's almanac */}
             <figcaption className="card relative mx-auto mt-2 grid max-w-md grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3">

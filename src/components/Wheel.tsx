@@ -10,7 +10,7 @@ const R_PLANET = 214;
 const R_ASPECT = 168;
 
 /** Keeps glyphs legible when planets sit close together. */
-function spread(angles: number[], minGap: number) {
+export function spread(angles: number[], minGap: number) {
   const idx = angles.map((_, i) => i).sort((a, b) => angles[a] - angles[b]);
   const out = idx.map((i) => angles[i]);
   for (let pass = 0; pass < 80; pass++) {

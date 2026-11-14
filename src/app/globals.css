@@ -31,46 +31,46 @@
 
 /* Dark theme: chosen explicitly, or by the system when no choice was made. */
 :root[data-theme="dark"] {
-  --color-paper: #15120f;
-  --color-paper-deep: #1d1915;
-  --color-paper-light: #262019;
-  --color-ink: #ebe2cf;
-  --color-ink-soft: #a89f8c;
-  --color-ink-faint: #766d5e;
-  --color-line: #ebe2cf;
-  --color-hair: #3d352a;
-  /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
-  --color-accent: #e2623e;
-  --color-accent-2: #d9a441;
-  --color-accent-3: #7fb5a2;
-  --band-bg: #1d1915;
-  --band-fg: #ebe2cf;
-  --band-star: #d8c79a;
-  --color-star: #d8c79a;
-  --moon-shadow: #2e2720;
-  --moon-lit: #ebe2cf;
+  --color-paper: #0c0b13;
+  --color-paper-deep: #13111b;
+  --color-paper-light: #1b1825;
+  --color-ink: #efe6d2;
+  --color-ink-soft: #b3aa98;
+  --color-ink-faint: #7f776a;
+  --color-line: #efe6d2;
+  --color-hair: #373145;
+  /* warm lights on a cool night: ember, gold and verdigris over indigo-black */
+  --color-accent: #e9704a;
+  --color-accent-2: #e0b052;
+  --color-accent-3: #86c2ad;
+  --band-bg: #13111b;
+  --band-fg: #efe6d2;
+  --band-star: #e3d3a6;
+  --color-star: #e3d3a6;
+  --moon-shadow: #2a2638;
+  --moon-lit: #efe6d2;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #15120f;
-    --color-paper-deep: #1d1915;
-    --color-paper-light: #262019;
-    --color-ink: #ebe2cf;
-    --color-ink-soft: #a89f8c;
-    --color-ink-faint: #766d5e;
-    --color-line: #ebe2cf;
-    --color-hair: #3d352a;
-    /* the colours of an old star atlas: vermilion ink, ochre and verdigris on warm black */
-    --color-accent: #e2623e;
-    --color-accent-2: #d9a441;
-    --color-accent-3: #7fb5a2;
-    --band-bg: #1d1915;
-    --band-fg: #ebe2cf;
-    --band-star: #d8c79a;
-  --color-star: #d8c79a;
-    --moon-shadow: #2e2720;
-    --moon-lit: #ebe2cf;
+    --color-paper: #0c0b13;
+    --color-paper-deep: #13111b;
+    --color-paper-light: #1b1825;
+    --color-ink: #efe6d2;
+    --color-ink-soft: #b3aa98;
+    --color-ink-faint: #7f776a;
+    --color-line: #efe6d2;
+    --color-hair: #373145;
+    /* warm lights on a cool night: ember, gold and verdigris over indigo-black */
+    --color-accent: #e9704a;
+    --color-accent-2: #e0b052;
+    --color-accent-3: #86c2ad;
+    --band-bg: #13111b;
+    --band-fg: #efe6d2;
+    --band-star: #e3d3a6;
+    --color-star: #e3d3a6;
+    --moon-shadow: #2a2638;
+    --moon-lit: #efe6d2;
     color-scheme: dark;
   }
 }
@@ -104,6 +104,10 @@ body {
 @layer components {
   .wrap {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-8;
+  }
+  /* for pages that fill the screen: findings, map, reports */
+  .wrap-wide {
+    @apply mx-auto w-full max-w-[94rem] px-4 sm:px-8;
   }
   /* small mono caption used for labels, statuses and data */
   .eyebrow {
@@ -371,20 +375,35 @@ body {
 }
 
 /* ---------- family constellation: unveils in stages, then responds to the pointer ---------- */
+/* everything eases in slowly and overlaps its neighbours, so no step is ever seen starting */
+.constellation svg {
+  /* the glow under the requester melts into the sky instead of ending at the drawing's edge */
+  mask-image: linear-gradient(#000 calc(100% - 2.75rem), transparent);
+  opacity: 0;
+  transform: scale(1.06);
+  transform-origin: 50% 85%;
+  transition:
+    opacity 3s ease,
+    transform 11s cubic-bezier(0.16, 0.6, 0.2, 1);
+}
+.constellation[data-unveiled="true"] svg {
+  opacity: 1;
+  transform: none;
+}
 .constellation .c-link {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   transition:
-    stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) var(--d, 0s),
+    stroke-dashoffset 2.6s cubic-bezier(0.5, 0, 0.2, 1) var(--d, 0s),
     stroke 0.6s ease,
     stroke-width 0.6s ease;
 }
 .constellation .c-node {
   opacity: 0;
-  transform: scale(0.1);
+  transform: scale(0.6);
   transition:
-    opacity 0.9s ease var(--d, 0s),
-    transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.5) var(--d, 0s),
+    opacity 2.2s ease var(--d, 0s),
+    transform 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
     r 0.5s ease;
 }
 .constellation .c-label,
@@ -393,16 +412,16 @@ body {
 .constellation .c-orbit,
 .constellation .c-kin {
   opacity: 0;
-  transition: opacity 1.2s ease var(--d, 0s);
+  transition: opacity 2.4s ease var(--d, 0s);
 }
 .constellation .c-sign {
   opacity: 0;
-  transform: scale(0.3) rotate(-30deg);
+  transform: scale(0.8);
   transform-box: fill-box;
   transform-origin: center;
   transition:
-    opacity 0.8s ease var(--d, 0s),
-    transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.4) var(--d, 0s),
+    opacity 2s ease var(--d, 0s),
+    transform 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
     fill 0.5s ease;
 }
 .constellation .c-halo,
@@ -448,10 +467,10 @@ body {
   animation: halo 5s ease-in-out var(--d, 0s) infinite;
 }
 .constellation[data-unveiled="true"] .c-ripple {
-  animation: ripple 3.2s ease-out 0.2s 2 both;
+  animation: ripple 6s cubic-bezier(0.2, 0.6, 0.3, 1) 0.8s 2 both;
 }
 .constellation[data-unveiled="true"] .c-ripple-2 {
-  animation-delay: 1.3s;
+  animation-delay: 2.6s;
 }
 .constellation[data-unveiled="true"] .c-sweep {
   animation: sweep 3.4s cubic-bezier(0.45, 0, 0.55, 1) 0.2s 1 both;
@@ -461,10 +480,12 @@ body {
   opacity: 1;
   transform: scale(1.45);
   transition-delay: 0s;
+  transition-duration: 0.6s;
 }
 .constellation[data-unveiled="true"] .c-kin.is-lit {
   opacity: 0.95;
   transition-delay: 0s;
+  transition-duration: 0.6s;
 }
 .constellation[data-unveiled="true"] .c-ray.is-lit {
   opacity: 0.7;
@@ -516,8 +537,11 @@ body {
 }
 @keyframes ripple {
   0% {
-    opacity: 0.7;
+    opacity: 0;
     transform: scale(0.05);
+  }
+  18% {
+    opacity: 0.4;
   }
   100% {
     opacity: 0;
@@ -545,6 +569,7 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .constellation svg,
   .constellation .c-link,
   .constellation .c-node,
   .constellation .c-label,
@@ -608,10 +633,72 @@ body {
 }
 .constellation .c-aura {
   opacity: 0;
-  transition: opacity 3s ease 0.4s;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 5s ease 0.6s;
 }
 .constellation[data-unveiled="true"] .c-aura {
   opacity: 1;
+}
+.sky-hero::before {
+  /* the edges fall away into the dark, so the eye stays on the tree */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(75% 70% at 50% 58%, transparent 55%, rgb(3 2 8 / 0.75));
+}
+.sky-dust {
+  /* the faintest stars, and a pale river of light crossing the sky */
+  background-image:
+    linear-gradient(118deg, transparent 30%, rgb(170 160 235 / 0.07) 44%, rgb(255 226 190 / 0.08) 50%, rgb(170 160 235 / 0.06) 57%, transparent 70%),
+    radial-gradient(1px 1px at 23px 41px, rgb(255 244 220 / 0.8), transparent),
+    radial-gradient(1px 1px at 97px 133px, rgb(255 244 220 / 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 171px 67px, rgb(210 220 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 213px 201px, rgb(255 244 220 / 0.5), transparent),
+    radial-gradient(1px 1px at 61px 229px, rgb(210 220 255 / 0.55), transparent),
+    radial-gradient(1.3px 1.3px at 139px 17px, rgb(255 230 190 / 0.6), transparent);
+  background-size:
+    100% 100%,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    260px 260px;
+  transform: translate3d(calc(var(--px, 0) * -6px), calc(var(--py, 0) * -4px), 0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* the sky itself comes up out of the dark before anything is drawn on it */
+  .sky-dust {
+    animation: fade-in 3.5s ease both;
+  }
+  .sky-far {
+    animation: sky-in 5s ease 0.4s both;
+  }
+  .sky-near {
+    animation: fade-in 5s ease 1.4s both;
+  }
+  .constellation[data-unveiled="true"] .c-aura {
+    animation: breathe 9s ease-in-out 6s infinite;
+  }
+}
+@keyframes sky-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
 }
 .scroll-cue {
   color: var(--color-ink-soft);
@@ -635,9 +722,6 @@ body {
   pointer-events: auto;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .sky-title {
-    animation: fade-in 2.4s ease 0.2s both;
-  }
   .slow-reveal[data-revealed="true"] .scroll-cue svg {
     animation: cue 2.6s ease-in-out 2s infinite;
   }
@@ -722,4 +806,178 @@ body {
 .map-button:disabled {
   cursor: default;
   opacity: 0.35;
+}
+
+/* ---------- top bar: out of sight until the pointer goes looking for it ---------- */
+.topbar-zone {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 0;
+}
+.topbar-zone::before {
+  /* a thin strip along the top edge that calls the bar down */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 14px;
+}
+.topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  transform: translateY(-104%);
+  opacity: 0;
+  visibility: hidden;
+  background: color-mix(in srgb, var(--color-paper) 84%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-hair);
+  border-radius: 0 0 1.75rem 1.75rem;
+  box-shadow: 0 24px 50px -30px rgb(0 0 0 / 0.55);
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.45s ease,
+    visibility 0s linear 0.55s;
+}
+.topbar-zone:hover .topbar,
+.topbar-zone:focus-within .topbar,
+.topbar-zone[data-open="true"] .topbar {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.topbar-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 1.375rem;
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: var(--color-ink-soft);
+  background: color-mix(in srgb, var(--color-paper-light) 72%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-hair);
+  border-top: 0;
+  border-radius: 0 0 999px 999px;
+  opacity: 0.7;
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.topbar-zone:hover .topbar-handle,
+.topbar-zone:focus-within .topbar-handle,
+.topbar-zone[data-open="true"] .topbar-handle {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100%);
+}
+@media print {
+  .topbar-zone {
+    display: none;
+  }
+}
+
+/* ---------- findings: figures beside the text ---------- */
+.stat {
+  @apply rounded-2xl bg-paper-deep px-4 py-3;
+}
+.meter {
+  @apply h-1.5 overflow-hidden rounded-full bg-paper-deep;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+.section-nav a {
+  @apply flex items-center gap-2.5 rounded-full px-3 py-1.5 text-sm text-ink-soft;
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease;
+}
+.section-nav a:hover {
+  @apply bg-paper-deep text-ink;
+}
+
+/* ---------- front page: the sky right now ---------- */
+.live-sky {
+  background: transparent;
+  box-shadow:
+    0 0 0 1px var(--color-hair),
+    0 0 70px -6px rgb(93 78 160 / 0.55),
+    0 0 140px -20px rgb(233 112 74 / 0.35);
+}
+.live-sign,
+.live-fade {
+  transition:
+    opacity 0.9s ease,
+    font-size 0.6s ease,
+    r 0.6s ease;
+}
+.live-aspect {
+  transition:
+    opacity 0.8s ease,
+    stroke-width 0.6s ease;
+}
+.live-aspect.is-lit {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.live-planet {
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+.live-core {
+  transition: opacity 1s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .live-orbit {
+    transform-origin: 320px 320px;
+    animation: orbit-in 2.6s cubic-bezier(0.2, 0.7, 0.15, 1) both;
+  }
+  .live-aspect {
+    stroke-dasharray: 1;
+    animation: draw-in 1.8s ease both;
+  }
+  .live-pulse {
+    animation: pulse-out 2.8s ease-out infinite;
+  }
+  .live-readout {
+    animation: readout-in 0.9s ease both;
+  }
+  .live-core {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: breathe 7s ease-in-out infinite;
+  }
+}
+@keyframes orbit-in {
+  from {
+    opacity: 0;
+    transform: rotate(-150deg);
+  }
+}
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pulse-out {
+  from {
+    opacity: 0.9;
+    r: 19px;
+  }
+  to {
+    opacity: 0;
+    r: 44px;
+  }
+}
+@keyframes readout-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }

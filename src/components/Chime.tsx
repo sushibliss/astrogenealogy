@@ -13,14 +13,14 @@ function makeVoice(): Voice | null {
   if (!Ctor) return null;
   const ctx = new Ctor();
   const out = ctx.createGain();
-  out.gain.value = 0.5;
+  out.gain.value = 0.36;
   // a short, quiet echo gives the note some air without a reverb
   const echo = ctx.createDelay(1);
   echo.delayTime.value = 0.27;
   const feedback = ctx.createGain();
   feedback.gain.value = 0.32;
   const wet = ctx.createGain();
-  wet.gain.value = 0.35;
+  wet.gain.value = 0.3;
   out.connect(ctx.destination);
   out.connect(echo);
   echo.connect(feedback);
@@ -34,8 +34,8 @@ function makeVoice(): Voice | null {
 function ring({ ctx, out }: Voice, freq: number) {
   const t = ctx.currentTime;
   for (const [ratio, level, length] of [
-    [1, 0.05, 1.5],
-    [2.01, 0.012, 0.7],
+    [1, 0.036, 1.5],
+    [2.01, 0.008, 0.7],
     [3.02, 0.005, 0.35],
   ]) {
     const osc = ctx.createOscillator();

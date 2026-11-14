@@ -147,7 +147,7 @@ function ensureDemoDocuments(ownerId: string) {
       "day of the same month, legitimate son of Joan Ferrer and Maria Bosch,",
       "both natives of Girona.",
       "",
-      "This is an invented transcription used to demonstrate Origen.",
+      "This is an invented transcription used to demonstrate Ascendant.",
     ]);
     writeFileSync(uploadPath(id), pdf);
     db.insert(schema.documents)

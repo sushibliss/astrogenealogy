@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Origen · Tus antepasados y su cielo",
+    "title": "Ascendant · Tus antepasados y su cielo",
     "description": "Un lugar privado para que investiguen a mano tu línea familiar y para leer la carta natal de cada antepasado encontrado."
   },
   "nav": {
@@ -12,10 +12,11 @@
     "language": "Idioma",
     "theme": "Cambiar entre claro y oscuro",
     "soundOn": "Sonido al pasar por los nombres: activado",
-    "soundOff": "Sonido al pasar por los nombres: desactivado"
+    "soundOff": "Sonido al pasar por los nombres: desactivado",
+    "menu": "Mostrar el menú"
   },
   "footer": {
-    "tagline": "Origen. Investigado por una persona, leído bajo el cielo con el que nacieron.",
+    "tagline": "Ascendant. Investigado por una persona, leído bajo el cielo con el que nacieron.",
     "privacy": "Privacidad"
   },
   "status": {
@@ -65,7 +66,7 @@
     "step3Title": "Lees lo que se ha encontrado",
     "step3Body": "Sus hallazgos se publican en privado para ti, con un pequeño árbol familiar y un informe natal de cada antepasado. Invita a tus familiares a leerlo.",
     "honestTitle": "Sin coincidencias instantáneas. Sin árboles públicos.",
-    "honest1": "Origen nunca te dirá en treinta segundos que desciendes de un rey. La investigación lleva el tiempo que lleva, y se te dirá con claridad qué está documentado y qué sigue abierto.",
+    "honest1": "Ascendant nunca te dirá en treinta segundos que desciendes de un rey. La investigación lleva el tiempo que lleva, y se te dirá con claridad qué está documentado y qué sigue abierto.",
     "honest2": "La hora de nacimiento de la mayoría de tus antepasados nunca se anotó. Sus informes lo dicen, y muestran lo que puede saberse con honestidad solo con la fecha: los planetas por signo, sin un Ascendente inventado.",
     "honest3": "Tu solicitud y sus hallazgos solo los ves tú, Teresa y las personas a las que invites a leer.",
     "almanac": "Hoy",
@@ -79,7 +80,9 @@
     "phase_6": "Cuarto menguante",
     "phase_7": "Luna menguante",
     "flourish": "Genealogía a mano · cartas según el cielo",
-    "demoPrompt": "¿Solo quieres mirar? Pruébalo con datos de ejemplo"
+    "demoPrompt": "¿Solo quieres mirar? Pruébalo con datos de ejemplo",
+    "skyHint": "El cielo de ahora mismo. Pasa por un planeta.",
+    "skyIn": "en"
   },
   "auth": {
     "name": "Tu nombre",
@@ -97,13 +100,13 @@
     "registerLink": "Crea una cuenta",
     "demoEyebrow": "Modo demo",
     "demoTitle": "Pruébalo sin cuenta",
-    "demoBody": "Un clic te da acceso con datos de ejemplo, para que veas los dos lados de Origen.",
+    "demoBody": "Un clic te da acceso con datos de ejemplo, para que veas los dos lados de Ascendant.",
     "demo_user": "Entrar como solicitante",
     "demo_user_hint": "Lucía · tiene una solicitud publicada",
     "demo_admin": "Entrar como Teresa",
     "demo_admin_hint": "Admin · mesa de investigación y publicación",
     "registerTitle": "Crea tu cuenta",
-    "registerLead": "Gratis mientras Origen esté en su primera versión. Todo lo que escribas es privado.",
+    "registerLead": "Gratis mientras Ascendant esté en su primera versión. Todo lo que escribas es privado.",
     "haveAccount": "¿Ya tienes cuenta?",
     "loginLink": "Entrar"
   },
@@ -339,7 +342,7 @@
   "privacy": {
     "eyebrow": "Texto provisional",
     "title": "Privacidad",
-    "placeholder": "Esta página es provisional. La política definitiva se redactará cuando se decidan los mercados y la base legal de Origen, y antes de cualquier lanzamiento público.",
+    "placeholder": "Esta página es provisional. La política definitiva se redactará cuando se decidan los mercados y la base legal de Ascendant, y antes de cualquier lanzamiento público.",
     "h1": "Qué recogemos",
     "p1": "Tu correo y tu nombre; los nombres, fechas y lugares que introduces sobre ti y tus familiares; y los hallazgos que Teresa publica para ti.",
     "h2": "Quién puede verlo",
@@ -354,7 +357,7 @@
   "notFound": {
     "title": "Aquí no hay nada",
     "body": "Esta página no existe, o el enlace que has seguido ya no es válido.",
-    "home": "Volver a Origen"
+    "home": "Volver a Ascendant"
   },
   "docs": {
     "title": "Documentos originales",
@@ -390,5 +393,17 @@
     "unplaced": "aún sin situar en el mapa",
     "show": "Mostrar",
     "unknown": "Nombre desconocido"
+  },
+  "glance": {
+    "contents": "En esta página",
+    "title": "De un vistazo",
+    "people": "personas en el árbol",
+    "generations": "generaciones",
+    "earliest": "el año más antiguo",
+    "found": "halladas en la investigación",
+    "lines": "Los apellidos",
+    "suns": "Bajo qué soles",
+    "sunsLead": "Los signos solares de quienes tienen fecha completa.",
+    "elements": "Los cuatro elementos"
   }
 }

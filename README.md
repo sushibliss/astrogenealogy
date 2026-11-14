@@ -1,4 +1,4 @@
-# Origen
+# Ascendant
 
 A private, astrology-forward web app. People submit a small ancestor intake
 (self → parents → grandparents); **Teresa researches the line by hand, offline**;
@@ -7,7 +7,7 @@ invite to read. Every person with a full birth date gets a **birth report**
 (Western tropical natal chart + written reading), and any two charts can be
 compared (synastry).
 
-Origen is deliberately *not* a tree database: it never searches archives or
+Ascendant is deliberately *not* a tree database: it never searches archives or
 matches records automatically. English and Spanish from day one. No billing in v1.
 
 ## Run it locally
@@ -83,6 +83,11 @@ The sample families are invented.
   Sun sign, the outer band is the zodiac with every Sun marked on it, and people
   who share a sign are joined by a thread. Hovering lights a person's line back
   to the requester; selecting them opens a card beside the tree.
+- **Name**: the site is called Ascendant (the rising sign, and an old word for an
+  ancestor). It is set in `src/lib/brand.ts` and `messages/*.json`; internal names
+  (package, database file, demo e-mail addresses) still say `origen`.
+- **Hidden top bar**: the navigation stays out of sight and slides down when the
+  pointer reaches the top edge, on keyboard focus, or when its small tab is tapped.
 - **Opening scene**: a published request opens on a night sky with the tree drawing
   itself; the findings, map and reports fade in once it has finished (or as soon as
   the reader scrolls). Reduced-motion settings skip the wait.

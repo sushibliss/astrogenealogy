@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Origen · Your ancestors, their sky",
+    "title": "Ascendant · Your ancestors, their sky",
     "description": "A private place to have your family line researched by hand and to read the birth chart of each ancestor found."
   },
   "nav": {
@@ -12,10 +12,11 @@
     "language": "Language",
     "theme": "Switch between light and dark",
     "soundOn": "Sound on names: on",
-    "soundOff": "Sound on names: off"
+    "soundOff": "Sound on names: off",
+    "menu": "Show the menu"
   },
   "footer": {
-    "tagline": "Origen. Researched by a person, read under the sky they were born under.",
+    "tagline": "Ascendant. Researched by a person, read under the sky they were born under.",
     "privacy": "Privacy"
   },
   "status": {
@@ -65,7 +66,7 @@
     "step3Title": "You read what was found",
     "step3Body": "Her findings are published privately for you, with a small family tree and a birth report for each ancestor. Invite relatives to read along.",
     "honestTitle": "No instant matches. No public trees.",
-    "honest1": "Origen will never tell you in thirty seconds that you descend from a king. Research takes the time it takes, and you will be told plainly what is documented and what is still open.",
+    "honest1": "Ascendant will never tell you in thirty seconds that you descend from a king. Research takes the time it takes, and you will be told plainly what is documented and what is still open.",
     "honest2": "Most of your ancestors’ birth hours were never written down. Their reports say so, and show what can honestly be known from the date alone: the planets by sign, without a guessed Ascendant.",
     "honest3": "Your request and its findings are visible only to you, to Teresa, and to the people you invite to read.",
     "almanac": "Today",
@@ -79,7 +80,9 @@
     "phase_6": "Last quarter",
     "phase_7": "Waning crescent",
     "flourish": "Genealogy by hand · charts by the sky",
-    "demoPrompt": "Just looking? Try it with sample data"
+    "demoPrompt": "Just looking? Try it with sample data",
+    "skyHint": "The sky right now. Rest on a planet.",
+    "skyIn": "in"
   },
   "auth": {
     "name": "Your name",
@@ -97,13 +100,13 @@
     "registerLink": "Create an account",
     "demoEyebrow": "Demo mode",
     "demoTitle": "Try it without an account",
-    "demoBody": "One click signs you in with sample data, so you can see both sides of Origen.",
+    "demoBody": "One click signs you in with sample data, so you can see both sides of Ascendant.",
     "demo_user": "Enter as a requester",
     "demo_user_hint": "Lucía · has a published request",
     "demo_admin": "Enter as Teresa",
     "demo_admin_hint": "Admin · research desk and publishing",
     "registerTitle": "Create your account",
-    "registerLead": "Free while Origen is in its first version. Everything you enter stays private.",
+    "registerLead": "Free while Ascendant is in its first version. Everything you enter stays private.",
     "haveAccount": "Already have an account?",
     "loginLink": "Sign in"
   },
@@ -339,7 +342,7 @@
   "privacy": {
     "eyebrow": "Placeholder",
     "title": "Privacy",
-    "placeholder": "This page is a placeholder. The final policy will be written once Origen’s markets and legal basis are decided, and before any public launch.",
+    "placeholder": "This page is a placeholder. The final policy will be written once Ascendant’s markets and legal basis are decided, and before any public launch.",
     "h1": "What we collect",
     "p1": "Your email and name; the names, dates and places you enter about yourself and your relatives; and the findings Teresa publishes for you.",
     "h2": "Who can see it",
@@ -354,7 +357,7 @@
   "notFound": {
     "title": "Nothing here",
     "body": "This page does not exist, or the link you followed is no longer valid.",
-    "home": "Back to Origen"
+    "home": "Back to Ascendant"
   },
   "docs": {
     "title": "Original documents",
@@ -390,5 +393,17 @@
     "unplaced": "not yet placed on the map",
     "show": "Show",
     "unknown": "Name unknown"
+  },
+  "glance": {
+    "contents": "On this page",
+    "title": "At a glance",
+    "people": "people in the tree",
+    "generations": "generations",
+    "earliest": "earliest year",
+    "found": "found during research",
+    "lines": "The family names",
+    "suns": "Under which Suns",
+    "sunsLead": "The Sun signs of everyone with a full birth date.",
+    "elements": "The four elements"
   }
 }
