@@ -35,6 +35,15 @@ export async function Header({ locale }: { locale: string }) {
             </>
           ) : (
             <>
+              <Link href="/chart" className="hover:underline underline-offset-4">
+                {t("chart")}
+              </Link>
+              <Link href="/sample" className="hover:underline underline-offset-4">
+                {t("sample")}
+              </Link>
+              <Link href="/guides" className="hover:underline underline-offset-4">
+                {t("guides")}
+              </Link>
               <Link href="/login" className="hover:underline underline-offset-4">
                 {t("login")}
               </Link>

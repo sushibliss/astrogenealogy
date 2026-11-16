@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { loginAction, registerAction } from "@/app/actions";
 
@@ -8,8 +8,25 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const t = useTranslations("auth");
   const locale = useLocale();
   const [state, action, pending] = useActionState(mode === "login" ? loginAction : registerAction, undefined);
+  useEffect(() => {
+    // a failed attempt must not be counted as a sign-up later
+    if (state?.error) {
+      try {
+        sessionStorage.removeItem("signup-pending");
+      } catch {}
+    }
+  }, [state]);
   return (
-    <form action={action} className="grid gap-4">
+    <form
+      action={action}
+      className="grid gap-4"
+      onSubmit={() => {
+        // picked up on the dashboard, where a successful registration lands
+        try {
+          if (mode === "register") sessionStorage.setItem("signup-pending", "1");
+        } catch {}
+      }}
+    >
       <input type="hidden" name="locale" value={locale} />
       {mode === "register" && (
         <div>

@@ -127,6 +127,18 @@ export const documents = sqliteTable(
   (t) => [index("documents_person_idx").on(t.personId), index("documents_request_idx").on(t.requestId)],
 );
 
+/** People who asked to hear from us by email. Kept apart from accounts on purpose. */
+export const subscribers = sqliteTable("subscribers", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  locale: text("locale").notNull().default("en"),
+  /** which page the form was on, e.g. "landing" or "chart" */
+  source: text("source").notNull().default(""),
+  /** lets them unsubscribe from a link without signing in */
+  token: text("token").notNull().unique(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type SourceDocument = typeof documents.$inferSelect;
 export type ResearchRequest = typeof requests.$inferSelect;

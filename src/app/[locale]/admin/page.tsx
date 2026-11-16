@@ -23,6 +23,7 @@ export default async function AdminQueue({ params }: { params: Promise<{ locale:
     .orderBy(desc(schema.requests.submittedAt))
     .all();
   const fmt = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+  const subscribers = db.select().from(schema.subscribers).all().length;
 
   return (
     <div className="wrap py-12">
@@ -77,6 +78,20 @@ export default async function AdminQueue({ params }: { params: Promise<{ locale:
           </section>
         );
       })}
+
+      <section className="mt-14">
+        <h2 className="eyebrow mb-2">{t("listTitle")}</h2>
+        <div className="card flex flex-wrap items-center justify-between gap-4 p-5">
+          <p>
+            <span className="display mr-2 text-3xl">{subscribers}</span>
+            <span className="text-ink-soft">{t("listCount")}</span>
+          </p>
+          {/* a file download, not a page */}
+          <a href="/api/subscribers" download className="btn-ghost btn-sm">
+            {t("listExport")}
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

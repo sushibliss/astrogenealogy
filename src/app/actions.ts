@@ -74,6 +74,38 @@ export async function logoutAction(form: FormData) {
   await signOut({ redirectTo: `/${safeLocale(form.get("locale"))}` });
 }
 
+/* ---------- email list ---------- */
+
+export type SubscribeState = { ok?: boolean; error?: string } | undefined;
+
+export async function subscribeAction(_prev: SubscribeState, form: FormData): Promise<SubscribeState> {
+  // a filled-in decoy field means a bot: answer as if it worked, store nothing
+  if (String(form.get("website") ?? "")) return { ok: true };
+  const email = String(form.get("email") ?? "").trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) return { error: "email" };
+  if (!form.get("consent")) return { error: "consent" };
+  const exists = db.select().from(schema.subscribers).where(eq(schema.subscribers.email, email)).get();
+  if (!exists) {
+    db.insert(schema.subscribers)
+      .values({
+        id: randomUUID(),
+        email,
+        locale: safeLocale(form.get("locale")),
+        source: String(form.get("source") ?? "").slice(0, 40),
+        token: randomUUID(),
+        createdAt: new Date(),
+      })
+      .run();
+  }
+  return { ok: true };
+}
+
+export async function unsubscribeAction(form: FormData) {
+  const token = String(form.get("token") ?? "");
+  db.delete(schema.subscribers).where(eq(schema.subscribers.token, token)).run();
+  return redirect({ href: "/unsubscribe/done", locale: safeLocale(form.get("locale")) });
+}
+
 /* ---------- intake ---------- */
 
 export type IntakePayload = { focusNotes: string; people: unknown[] };

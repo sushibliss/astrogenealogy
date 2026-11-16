@@ -11,7 +11,7 @@ export const DEMO_PASSWORD = "origen-demo";
 export const DEMO_USER_EMAIL = "demo@origen.local";
 export const DEMO_INVITE_TOKEN = "demo-invite-ferrer-vidal";
 
-type SeedPerson = {
+export type SeedPerson = {
   path: string;
   source?: "intake" | "research";
   givenNames: string;
@@ -35,7 +35,7 @@ const BANYOLES: SeedPerson["place"] = ["Banyoles, Catalonia, Spain", 42.119, 2.7
 const PUEBLA: SeedPerson["place"] = ["Puebla, Puebla, Mexico", 19.043, -98.198, "America/Mexico_City"];
 
 // An invented family, for demonstration only.
-const FERRER: SeedPerson[] = [
+export const FERRER: SeedPerson[] = [
   { path: "", givenNames: "Lucía", surnames: "Ferrer Vidal", birthDate: "1991-04-12", birthTime: "09:40", place: BCN, living: "alive" },
   { path: "f", givenNames: "Jordi", surnames: "Ferrer Soler", birthDate: "1960-11-03", place: GIRONA, living: "alive" },
   { path: "m", givenNames: "Carmen", surnames: "Vidal Ruiz", birthDate: "1963-02-21", place: VALENCIA, living: "alive" },
@@ -58,7 +58,7 @@ const ROJAS: SeedPerson[] = [
   { path: "mm", givenNames: "", surnames: "Herrera", living: "unknown", notes: "We never knew her first name." },
 ];
 
-const PUBLICATION_BODY = `## Summary
+export const PUBLICATION_BODY = `## Summary
 
 Your paternal line is firmly documented in **Girona** back to 1898, and I could extend it one generation beyond what you gave me. The maternal line in **Valencia** is harder: one great-grandfather is confirmed only by year so far.
 
@@ -163,7 +163,7 @@ function ensureDemoDocuments(ownerId: string) {
 }
 
 /** Places the demo family lived, for the map (added once, also to databases seeded before the map existed). */
-const DEMO_RESIDENCES: Record<string, string> = {
+export const DEMO_RESIDENCES: Record<string, string> = {
   ff: "Girona (1931–2004)",
   fm: "Girona (1956–2015)",
   mf: "Sagunto (1951–1960)\nValencia (1960–1998)",

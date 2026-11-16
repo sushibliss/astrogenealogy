@@ -1,3 +1,4 @@
+import { TrackFlag } from "@/components/Consent";
 import { desc, eq } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -21,6 +22,7 @@ export default async function Dashboard({ params }: { params: Promise<{ locale: 
 
   return (
     <div className="wrap py-12">
+      <TrackFlag flag="signup-pending" event="sign_up" />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow mb-2">{user.name || user.email}</p>

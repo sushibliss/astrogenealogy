@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { saveIntakeAction } from "@/app/actions";
 import { INTAKE_PATHS, relationLabel } from "@/lib/people";
 import { emptyPerson, type PersonInput } from "@/lib/person-input";
+import { track } from "@/lib/track";
 import { PersonFields } from "./PersonFields";
 
 const STEPS = [[""], ["f", "m"], ["ff", "fm", "mf", "mm"]] as const;
@@ -37,6 +38,7 @@ export function IntakeWizard({
       setError(null);
       const res = await saveIntakeAction(locale, requestId, { focusNotes: focus, people: Object.values(people) }, submit);
       if (res?.error) setError(res.error);
+      else if (submit) track("request_submitted");
     });
 
   const go = (n: number) => {

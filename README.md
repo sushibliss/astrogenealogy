@@ -52,6 +52,8 @@ The sample families are invented.
 | `ADMIN_EMAIL` | The account with this email is the admin. Default `teresa@origen.local`. |
 | `DATABASE_URL` | Path of the SQLite file. Default `./data/origen.db`. |
 | `DEMO_LOGIN` | Demo sign-in buttons. On in development unless `false`; off in production unless `true`. |
+| `SITE_URL` | Public address of the site, for the sitemap, canonical links and share previews. |
+| `GA_ID`, `GOOGLE_ADS_ID`, `META_PIXEL_ID` | Optional measurement and advertising tags. Empty means nothing is loaded and no cookie banner is shown. |
 
 ## Scripts
 
@@ -88,6 +90,19 @@ The sample families are invented.
   (package, database file, demo e-mail addresses) still say `origen`.
 - **Hidden top bar**: the navigation stays out of sight and slides down when the
   pointer reaches the top edge, on keyboard focus, or when its small tab is tapped.
+- **Public pages and search**: the front page, a free birth chart (`/chart`), a sample
+  report built from the invented family (`/sample`), how it works and pricing, questions,
+  and guides are open to everyone and to search engines, with a sitemap, canonical and
+  translation links, share images and structured data. Everything personal stays
+  `noindex` and is disallowed in `robots.txt`.
+- **Editorial content** lives as Markdown in `content/` (pages and guides, one folder per
+  language) and can be edited without touching code.
+- **Email list**: sign-ups are stored in the `subscribers` table; the research desk shows
+  the count and a CSV download.
+- **Measurement and advertising**: Google Analytics, Google Ads and Meta tags load only
+  when their IDs are set, only after the visitor accepts the cookie banner, and only on
+  public pages. See [`docs/marketing/launch-checklist.md`](docs/marketing/launch-checklist.md)
+  and [`docs/marketing/ad-copy.md`](docs/marketing/ad-copy.md).
 - **Opening scene**: a published request opens on a night sky with the tree drawing
   itself; the findings, map and reports fade in once it has finished (or as soon as
   the reader scrolls). Reduced-motion settings skip the wait.

@@ -78,7 +78,7 @@ function DateParts({
   );
 }
 
-function PlaceField({
+export function PlaceField({
   value,
   located,
   onChange,
